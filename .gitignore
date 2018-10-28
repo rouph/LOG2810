@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+*.log
+TP1/log2810/Debug
+TP1/Debug
+TP1/.vs
