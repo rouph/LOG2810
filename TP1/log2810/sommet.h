@@ -35,8 +35,8 @@ public:
 	//algo
 	void updateNode(vector<Node*>& toUpdate);
 
-	void addVehiculeStatusAndSort(vehicule status);
-	vector<vehicule> getVehicule();
+	void addVehiculeStatusAndSort(vehicule* status);
+	vector<vehicule*> getVehicule();
 	void sortVehicule();
 	void resetVehicule();
 private:
@@ -44,7 +44,7 @@ private:
 	bool bisStart;
 	int stationNumber;
 
-	vector<vehicule> vehiculeStatus;
+	vector<vehicule*> vehiculeStatus;
 
 	Node * previousNode;
 	bool bHasStation;

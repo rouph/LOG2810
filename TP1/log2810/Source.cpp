@@ -13,8 +13,10 @@ int main()
 	string file = "centresLocaux1.txt";
 
 	graph test;
+
 	test.CreateGraph();
-	test.getShortestPath(1, 2);
+	//test.getShortestPath(1, 3);
+	//test.getShortestPath(1, 2);
 	std::cout << endl;
 	test.getShortestPath(1, 5);
 	std::cout << endl;
