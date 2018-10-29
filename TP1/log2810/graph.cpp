@@ -71,7 +71,8 @@ void graph::getShortestPath(int begining, int end) {
 		graphSet = true;
 		Nodes[begining - 1]->isStart(true);
 		queue.push_back(Nodes[begining - 1]);
-		Nodes[begining - 1]->updateDistance(0);
+		vehicule newVehicule;
+		Nodes[begining - 1]->addVehiculeStatusAndSort(newVehicule);
 		Nodes[begining - 1]->isVisited(true);
 		//hon talama awal element mano  lelement a la posisiton end-1 we update
 		while (queue[0] != Nodes[end - 1])

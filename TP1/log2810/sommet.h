@@ -4,8 +4,10 @@
 #include <vector>
 #include "arc.h"
 #include "constante.h"
+#include "vehicule.h"
 using namespace std;
 class arch;
+class vehicule;
 class Node {
 	//Getters
 public:
@@ -33,11 +35,17 @@ public:
 	//algo
 	void updateNode(vector<Node*>& toUpdate);
 
-
+	void addVehiculeStatusAndSort(vehicule status);
+	vector<vehicule> getVehicule();
+	void sortVehicule();
+	void resetVehicule();
 private:
 	int totalDistance;
 	bool bisStart;
 	int stationNumber;
+
+	vector<vehicule> vehiculeStatus;
+
 	Node * previousNode;
 	bool bHasStation;
 	bool bIsVisited;
