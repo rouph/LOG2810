@@ -56,6 +56,8 @@
 		previousNode = NULL;
 		totalDistance = invalidDistance;
 		bIsVisited = false;
+		for (int i = 0; i < vehiculeStatus.size(); i++)
+			vehiculeStatus[i]->reset();
 	}
 	bool Node::isStart() {
 		return bisStart;

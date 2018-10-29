@@ -1,6 +1,7 @@
 #ifndef  VEHICULE_H
 #define VEHICULE_H
 #include <vector>
+#include"constante.h"
 class vehicule {
 public:
 	vehicule(double pourc = 100, int temps = 0);
@@ -10,6 +11,7 @@ public:
 	void updatePourcentage(double status);
 	std::vector<int> getWhereCharged();
 	void addChargedStation(int station);
+	void reset();
 private:
 	double pourcentage;
 	int time;

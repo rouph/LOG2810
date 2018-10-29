@@ -25,5 +25,10 @@ void vehicule::updatePourcentage(double status) {
 	pourcentage = status;
 }
 
+void vehicule::reset() {
+	pourcentage = 0;
+	time = invalidDistance;
+	whereCharged.clear();
+}
 
 

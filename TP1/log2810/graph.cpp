@@ -65,9 +65,11 @@ void graph::getShortestPath(int begining, int end) {
 		for (unsigned int i = 0; i < Nodes.size(); i++)
 		{
 			Nodes[i]->resetNode();
+			queue.clear();
+
 		}
 
-	if (Nodes[begining - 1]->getTotalDistance() != 0) {
+	if (Nodes[begining - 1]->getVehicule()[0]->getTime() != 0) {
 		graphSet = true;
 		Nodes[begining - 1]->isStart(true);
 		queue.push_back(Nodes[begining - 1]);
