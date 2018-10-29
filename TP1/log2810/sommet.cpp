@@ -75,13 +75,13 @@
 		if (!bHasStation) {
 			for (unsigned int i = 0; i < archs.size(); i++) {
 				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * (double)(archs[i].getTime() / 60)) > 20 ||
+					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) > 20 ||
 					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() < 20))
 				{
 					vector<vehicule*> temp = archs[i].getNode1()->getVehicule();
 					for (int j  = 0; j < temp.size(); j++) {
-						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * (double)(archs[j].getTime() / 60)), temp[j]->getTime() + archs[i].getTime());
+						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)archs[i].getTime() / 60)), temp[j]->getTime() + archs[i].getTime());
 						archs[i].getNode2()->resetVehicule();
 						archs[i].getNode2()->addVehiculeStatusAndSort(test);
 						archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
