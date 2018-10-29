@@ -77,50 +77,52 @@
 		if (!bHasStation) {
 			for (unsigned int i = 0; i < archs.size(); i++) {
 				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) > 20 ||
-					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() < 20))
+					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 ||
+					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
+					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
 				{
 					vector<vehicule*> temp = archs[i].getNode1()->getVehicule();
+					archs[i].getNode2()->resetVehicule();
+					archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
 					for (int j  = 0; j < temp.size(); j++) {
 						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)archs[i].getTime() / 60)), temp[j]->getTime() + archs[i].getTime());
-						archs[i].getNode2()->resetVehicule();
 						archs[i].getNode2()->addVehiculeStatusAndSort(test);
-						archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
 					}
 				}
 			}
 		}
-		else
+		else {
 			for (unsigned int i = 0; i < archs.size(); i++) {
 				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * (archs[i].getTime() / 60)) > 20 ||
-					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() < 20))
+					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 ||
+					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
+					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
 				{
+					archs[i].getNode2()->resetVehicule();
 					vector<vehicule*> temp = archs[i].getNode1()->getVehicule();
+					archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
+
 					for (int j = 0; j < temp.size(); j++) {
-						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * (archs[i].getTime() / 60)), temp[j]->getTime() + archs[i].getTime());
-						vehicule* test2 = new vehicule((100 - 6 * (archs[i].getTime() / 60), temp[j]->getTime() + archs[i].getTime() + 120));
-						for(int z = 0 ; z < temp[i]->getWhereCharged().size();z++){
-							test->addChargedStation(temp[i]->getWhereCharged()[z]);
-							test2->addChargedStation(temp[i]->getWhereCharged()[z]);
+						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)), temp[j]->getTime() + archs[i].getTime());
+						vehicule* test2 = new vehicule((100 - 6 * ((double)(archs[i].getTime()) / 60), temp[j]->getTime() + archs[i].getTime() + 120));
+						for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
+							test->addChargedStation(temp[j]->getWhereCharged()[z]);
+							test2->addChargedStation(temp[j]->getWhereCharged()[z]);
 						}
 						test2->addChargedStation(archs[i].getNode1()->getStationNumber());
-						archs[i].getNode2()->resetVehicule();
 						archs[i].getNode2()->addVehiculeStatusAndSort(test);
 						archs[i].getNode2()->addVehiculeStatusAndSort(test2);
-						archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
 					}
 				}
 			}
+		}
 		if (toUpdate.size() > 1)
 			toUpdate.erase(toUpdate.begin());
 
 		std::sort(toUpdate.begin(), toUpdate.end(),
 			[]( Node* a,  Node* b) -> bool
 		{
-			return a->getVehicule()[0]->getTime() <  b->getVehicule()[0]->getTime() && a->getVehicule()[0]->getPourcentage() >= 20;
+			return a->getVehicule()[0]->getTime() <  b->getVehicule()[0]->getTime()		;
 		});
 	}
 
@@ -136,10 +138,12 @@
 		std::sort(vehiculeStatus.begin(), vehiculeStatus.end(),
 			[](vehicule* a, vehicule* b) -> bool
 		{
-			return (a->getTime() < b->getTime()) && (a->getPourcentage() > 20) ;
+			return (a->getTime() < b->getTime()) && (a->getPourcentage() >= 20) || ((a->getTime() > b->getTime()) && (b->getPourcentage() < 20));
 		});
 	}
 
 	void Node::resetVehicule() {
+		for (int i = 0; i < vehiculeStatus.size(); i++)
+			delete vehiculeStatus[i];
 		vehiculeStatus.clear();
 	}

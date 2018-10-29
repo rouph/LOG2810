@@ -17,7 +17,7 @@ int main()
 	test.CreateGraph();
 	//test.getShortestPath(1, 3);
 	//test.getShortestPath(1, 2);
-	test.getShortestPath(3, 5);
+	//test.getShortestPath(3, 5);
 	std::cout << endl;
 	test.getShortestPath(1, 5);
 	std::cout << endl;
