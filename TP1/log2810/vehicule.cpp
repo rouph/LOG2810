@@ -14,10 +14,10 @@ int vehicule::getTime() {
 void vehicule::updateTime(int status) {
 	time = status;
 }
-std::vector<int> vehicule::getWhereCharged() {
+std::vector<int*> vehicule::getWhereCharged() {
 	return whereCharged;
 }
-void vehicule::addChargedStation(int station) {
+void vehicule::addChargedStation(int* station) {
 	whereCharged.push_back(station);
 }
 

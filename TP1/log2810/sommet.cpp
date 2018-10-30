@@ -77,7 +77,9 @@
 		if (!bHasStation) {
 			for (unsigned int i = 0; i < archs.size(); i++) {
 				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 ||
+					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 || 
+					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
+					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 ||
 					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
 				{
@@ -95,6 +97,8 @@
 			for (unsigned int i = 0; i < archs.size(); i++) {
 				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 ||
+					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
+					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 ||
 					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
 				{
@@ -104,12 +108,13 @@
 
 					for (int j = 0; j < temp.size(); j++) {
 						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)), temp[j]->getTime() + archs[i].getTime());
-						vehicule* test2 = new vehicule((100 - 6 * ((double)(archs[i].getTime()) / 60), temp[j]->getTime() + archs[i].getTime() + 120));
+						vehicule* test2 = new vehicule((100 - 6 * ((double)(archs[i].getTime()) / 60)),( temp[j]->getTime() + archs[i].getTime() + 120));
 						for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
 							test->addChargedStation(temp[j]->getWhereCharged()[z]);
 							test2->addChargedStation(temp[j]->getWhereCharged()[z]);
 						}
-						test2->addChargedStation(archs[i].getNode1()->getStationNumber());
+						int* temp =new int( archs[i].getNode1()->getStationNumber());
+						test2->addChargedStation(temp);
 						archs[i].getNode2()->addVehiculeStatusAndSort(test);
 						archs[i].getNode2()->addVehiculeStatusAndSort(test2);
 					}

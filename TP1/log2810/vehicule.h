@@ -9,13 +9,13 @@ public:
 	int getTime();
 	void updateTime(int status);
 	void updatePourcentage(double status);
-	std::vector<int> getWhereCharged();
-	void addChargedStation(int station);
+	std::vector<int*> getWhereCharged();
+	void addChargedStation(int* station);
 	void reset();
 private:
 	double pourcentage;
 	int time;
-	std::vector< int> whereCharged;
+	std::vector<int*> whereCharged;
 };
 
 #endif
