@@ -141,6 +141,7 @@
 		});
 	}
 
+
 	void Node::resetVehicule() {
 		for (int i = 0; i < vehiculeStatus.size(); i++)
 			delete vehiculeStatus[i];
