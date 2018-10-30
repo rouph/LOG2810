@@ -30,3 +30,41 @@ bool arch::canUpdate() {
 		 node2BestVehicule->getTime() < Node1->getVehicule()[0]->getTime() + archtime)
 		&& (node2BestVehicule->getPourcentage()) < 20 ) && Node1->getPreviousNode() != Node2;
 }
+
+void arch::updateNode2(bool hasStation) {
+
+	Node2->resetVehicule();
+	Node2->setPreviousNode(Node1);
+	vector<vehicule*> vehiculeStatus = Node1->getVehicule();
+	if (!hasStation)
+		updateNode2VehiculeStatus(vehiculeStatus);
+	else
+		rechargeAndUpdateNode2VehiculeStatus(vehiculeStatus);
+}
+
+void arch::updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus) {
+	for (int j = 0; j < vehiculeStatus.size(); j++) {
+		vehicule* test = new vehicule((vehiculeStatus[j]->getPourcentage() - 6 * ((double)archtime / 60)), vehiculeStatus[j]->getTime() + archtime);
+		for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
+			test->addChargedStation(vehiculeStatus[j]->getWhereCharged()[z]);
+		}
+		Node2->addVehiculeStatusAndSort(test);
+	}
+}
+
+void arch::rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus) {
+
+	for (int j = 0; j < vehiculeStatus.size(); j++) {
+		vehicule* notRecharged = new vehicule((vehiculeStatus[j]->getPourcentage() - 6 * ((double)(archtime) / 60)), vehiculeStatus[j]->getTime() + archtime);
+		vehicule* Recharged = (vehiculeStatus[j]->getPourcentage() >= 20) ? new vehicule((100 - 6 * ((double)(archtime) / 60)), (vehiculeStatus[j]->getTime() + archtime + 120)) : notRecharged;
+		for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
+			int* number = vehiculeStatus[j]->getWhereCharged()[z];
+			notRecharged->addChargedStation(number);
+			Recharged->addChargedStation(number);
+		}
+		Recharged->addChargedStation(Node1->getStationNumber());
+		Node2->addVehiculeStatusAndSort(notRecharged);
+		if (Recharged != notRecharged)
+			Node2->addVehiculeStatusAndSort(Recharged);
+	}
+}

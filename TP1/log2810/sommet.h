@@ -12,18 +12,15 @@ class Node {
 	//Getters
 public:
 	Node(int number, bool station);
-
-	int getTotalDistance();
 	Node* getPreviousNode();
 	bool isVisited();
 	bool hasStation();
-	int getStationNumber();
+	int* getStationNumber();
 	vector<arch> getArchs();
 	bool isStart();
 	///////////////
 
 	//setters
-	void updateDistance(int distance);
 	void setPreviousNode(Node * prevNode);
 	void isVisited(bool status);
 	void hasStation(bool status);
@@ -40,10 +37,9 @@ public:
 	void sortVehicule();
 	void resetVehicule();
 private:
-	int totalDistance;
-	bool bisStart;
-	int stationNumber;
 
+	bool bisStart;
+	int* stationNumber;
 	vector<vehicule*> vehiculeStatus;
 
 	Node * previousNode;

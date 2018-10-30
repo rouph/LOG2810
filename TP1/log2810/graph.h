@@ -15,6 +15,7 @@ public:
 	void ExtractArchs(ifstream& file);
 	void getShortestPath(int begining, int end);
 	void affichagePlusCourChemin(Node* node);
+	void rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus);
 private:
 	void extractNodeInfo(string& line, int& number, bool& hasStation);
 	string fileName;
