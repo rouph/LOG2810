@@ -26,9 +26,7 @@ bool arch::canUpdate() {
 	return (node2BestVehicule->getTime() > node1BestVehicule->getTime() + archtime
 		&& (getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archtime) / 60)) >= 20 ||
 
-		node2BestVehicule->getTime() > Node1->getVehicule()[0]->getTime() + archtime
-		&& (node2BestVehicule->getPourcentage()) < 20  ||
-
-		node2BestVehicule->getTime() < Node1->getVehicule()[0]->getTime() + archtime
-		&& (node2BestVehicule->getPourcentage() < 20) ) && Node1->getPreviousNode() != Node2;
+		(node2BestVehicule->getTime() > Node1->getVehicule()[0]->getTime() + archtime || 
+		 node2BestVehicule->getTime() < Node1->getVehicule()[0]->getTime() + archtime)
+		&& (node2BestVehicule->getPourcentage()) < 20 ) && Node1->getPreviousNode() != Node2;
 }

@@ -96,7 +96,13 @@ void graph::affichagePlusCourChemin(Node* node) {
 			std::cout << prev->getStationNumber() << "<-";
 			prev = prev->getPreviousNode();
 		}
-		std::cout << "poucentage: " << node->getVehicule()[0]->getPourcentage() << " temps: " << node->getVehicule()[0]->getTime();
+		std::cout << "poucentage: " << node->getVehicule()[0]->getPourcentage() << " temps: " << node->getVehicule()[0]->getTime() << endl;
+
+		if (node->getVehicule()[0]->getWhereCharged().size() > 0)
+			std::cout << "avec recharge aux position : ";
+		for (int i = 0; i < node->getVehicule()[0]->getWhereCharged().size(); i++) {
+			std::cout << *node->getVehicule()[0]->getWhereCharged()[i] << " ";
+		}
 	}
 	else {
 		std::cout << " chemin impossbile car pourcentage finale < 20 " << endl;
