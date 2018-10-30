@@ -79,7 +79,7 @@
 				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 || 
 					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 ||
+					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 && (archs[i].getNode1()->getVehicule()[0]->getPourcentage()) >= 20 ||
 					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
 				{
@@ -101,7 +101,7 @@
 				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 ||
 					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 ||
+					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 && (archs[i].getNode1()->getVehicule()[0]->getPourcentage()) >= 20 ||
 					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
 					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
 				{
