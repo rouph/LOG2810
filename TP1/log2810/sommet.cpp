@@ -88,6 +88,9 @@
 					archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
 					for (int j  = 0; j < temp.size(); j++) {
 						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)archs[i].getTime() / 60)), temp[j]->getTime() + archs[i].getTime());
+						for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
+							test->addChargedStation(temp[j]->getWhereCharged()[z]);
+						}
 						archs[i].getNode2()->addVehiculeStatusAndSort(test);
 					}
 				}
@@ -105,18 +108,20 @@
 					archs[i].getNode2()->resetVehicule();
 					vector<vehicule*> temp = archs[i].getNode1()->getVehicule();
 					archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
-
 					for (int j = 0; j < temp.size(); j++) {
-						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)), temp[j]->getTime() + archs[i].getTime());
-						vehicule* test2 = new vehicule((100 - 6 * ((double)(archs[i].getTime()) / 60)),( temp[j]->getTime() + archs[i].getTime() + 120));
-						for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
-							test->addChargedStation(temp[j]->getWhereCharged()[z]);
-							test2->addChargedStation(temp[j]->getWhereCharged()[z]);
+						if (temp[j]->getPourcentage() >= 20) {
+							vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)), temp[j]->getTime() + archs[i].getTime());
+							vehicule* test2 = new vehicule((100 - 6 * ((double)(archs[i].getTime()) / 60)), (temp[j]->getTime() + archs[i].getTime() + 120));
+							for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
+								int* number = temp[j]->getWhereCharged()[z];
+								test->addChargedStation(number);
+								test2->addChargedStation(number);
+							}
+							int* lol = new int(archs[i].getNode1()->getStationNumber());
+							test2->addChargedStation(lol);
+							archs[i].getNode2()->addVehiculeStatusAndSort(test);
+							archs[i].getNode2()->addVehiculeStatusAndSort(test2);
 						}
-						int* temp =new int( archs[i].getNode1()->getStationNumber());
-						test2->addChargedStation(temp);
-						archs[i].getNode2()->addVehiculeStatusAndSort(test);
-						archs[i].getNode2()->addVehiculeStatusAndSort(test2);
 					}
 				}
 			}

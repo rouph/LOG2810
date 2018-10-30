@@ -19,7 +19,7 @@ int main()
 	//test.getShortestPath(1, 2);
 	//test.getShortestPath(3, 5);
 	std::cout << endl;
-	test.getShortestPath(1, 5);
+	test.getShortestPath(1, 7);
 	std::cout << endl;
 	test.getShortestPath(1, 3);
 	std::cout << endl;
