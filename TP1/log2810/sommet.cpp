@@ -10,7 +10,7 @@
 	,  bisStart(false)
 
 	{
-		vehicule* test = new vehicule(0,invalidDistance);
+		vehicule* test = new vehicule(0, invalidDistance);
 		vehiculeStatus.push_back(test);
 	}
 
@@ -76,20 +76,14 @@
 		}
 		if (!bHasStation) {
 			for (unsigned int i = 0; i < archs.size(); i++) {
-				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 || 
-					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 && (archs[i].getNode1()->getVehicule()[0]->getPourcentage()) >= 20 ||
-					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
+				if (archs[i].canUpdate())
 				{
-					vector<vehicule*> temp = archs[i].getNode1()->getVehicule();
 					archs[i].getNode2()->resetVehicule();
 					archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
-					for (int j  = 0; j < temp.size(); j++) {
-						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)archs[i].getTime() / 60)), temp[j]->getTime() + archs[i].getTime());
-						for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
-							test->addChargedStation(temp[j]->getWhereCharged()[z]);
+					for (int j  = 0; j < vehiculeStatus.size(); j++) {
+						vehicule* test = new vehicule((vehiculeStatus[j]->getPourcentage() - 6 * ((double)archs[i].getTime() / 60)), vehiculeStatus[j]->getTime() + archs[i].getTime());
+						for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
+							test->addChargedStation(vehiculeStatus[j]->getWhereCharged()[z]);
 						}
 						archs[i].getNode2()->addVehiculeStatusAndSort(test);
 					}
@@ -98,30 +92,25 @@
 		}
 		else {
 			for (unsigned int i = 0; i < archs.size(); i++) {
-				if (archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)) >= 20 ||
-					archs[i].getNode2()->getVehicule()[0]->getTime() > archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage()) < 20 && (archs[i].getNode1()->getVehicule()[0]->getPourcentage()) >= 20 ||
-					archs[i].getNode2()->getVehicule()[0]->getTime() < archs[i].getNode1()->getVehicule()[0]->getTime() + archs[i].getTime()
-					&& (archs[i].getNode2()->getVehicule()[0]->getPourcentage() < 20))
+				if (archs[i].canUpdate())
 				{
 					archs[i].getNode2()->resetVehicule();
 					vector<vehicule*> temp = archs[i].getNode1()->getVehicule();
 					archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
 					for (int j = 0; j < temp.size(); j++) {
-						if (temp[j]->getPourcentage() >= 20) {
-							vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)), temp[j]->getTime() + archs[i].getTime());
-							vehicule* test2 = new vehicule((100 - 6 * ((double)(archs[i].getTime()) / 60)), (temp[j]->getTime() + archs[i].getTime() + 120));
-							for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
-								int* number = temp[j]->getWhereCharged()[z];
-								test->addChargedStation(number);
-								test2->addChargedStation(number);
-							}
-							int* lol = new int(archs[i].getNode1()->getStationNumber());
-							test2->addChargedStation(lol);
-							archs[i].getNode2()->addVehiculeStatusAndSort(test);
-							archs[i].getNode2()->addVehiculeStatusAndSort(test2);
+						vehicule* test = new vehicule((temp[j]->getPourcentage() - 6 * ((double)(archs[i].getTime()) / 60)), temp[j]->getTime() + archs[i].getTime());
+						
+						vehicule* test2 =( temp[j]->getPourcentage() >= 20) ? new vehicule((100 - 6 * ((double)(archs[i].getTime()) / 60)), (temp[j]->getTime() + archs[i].getTime() + 120)): test;
+						for (int z = 0; z < temp[j]->getWhereCharged().size(); z++) {
+							int* number = temp[j]->getWhereCharged()[z];
+							test->addChargedStation(number);
+							test2->addChargedStation(number);
 						}
+						int* lol = new int(archs[i].getNode1()->getStationNumber());
+						test2->addChargedStation(lol);
+						archs[i].getNode2()->addVehiculeStatusAndSort(test);
+						if(test2 != test)
+							archs[i].getNode2()->addVehiculeStatusAndSort(test2);
 					}
 				}
 			}

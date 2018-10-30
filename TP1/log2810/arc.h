@@ -11,9 +11,9 @@ public:
 	int getTime();
 	Node* getNode1();
 	Node* getNode2();
-
+	bool canUpdate();
 private:
-	int time;
+	int archtime;
 	Node* Node1;
 	Node* Node2;
 };
