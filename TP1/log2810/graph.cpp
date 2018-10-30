@@ -84,10 +84,21 @@ void graph::getShortestPath(int begining, int end) {
 		}
 	}
 	//hon akide la affichage
-	Node* prev = Nodes[end - 1];
-	while (prev != NULL) {
+	affichagePlusCourChemin(Nodes[end - 1]);
 
-		std::cout << prev->getStationNumber() << "<-";
-		prev = prev->getPreviousNode();
+}
+void graph::affichagePlusCourChemin(Node* node) {
+
+	if (node->getVehicule()[0]->getPourcentage() >= 0) {
+		Node* prev = node;
+		while (prev != NULL) {
+
+			std::cout << prev->getStationNumber() << "<-";
+			prev = prev->getPreviousNode();
+		}
+		std::cout << "poucentage: " << node->getVehicule()[0]->getPourcentage() << " temps: " << node->getVehicule()[0]->getTime();
+	}
+	else {
+		std::cout << " chemin impossbile car pourcentage finale < 20 " << endl;
 	}
 }

@@ -14,6 +14,7 @@ public:
 	void extractNodes(ifstream& file);
 	void ExtractArchs(ifstream& file);
 	void getShortestPath(int begining, int end);
+	void affichagePlusCourChemin(Node* node);
 private:
 	void extractNodeInfo(string& line, int& number, bool& hasStation);
 	string fileName;
