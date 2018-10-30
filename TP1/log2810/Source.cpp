@@ -21,10 +21,12 @@ int main()
 	std::cout << endl;
 	test.getShortestPath(1, 7);
 	std::cout << endl;
-	//test.getShortestPath(1, 3);
-	//std::cout << endl;
-	//test.getShortestPath(1, 4);
-	//std::cout << endl;
+	test.getShortestPath(3, 1);
+	std::cout << endl;
+	test.getShortestPath(1, 3);
+	std::cout << endl;
+	test.getShortestPath(7, 1);
+	std::cout << endl;
 	//test.getShortestPath(1, 1);
 	//std::cout << endl;
 	

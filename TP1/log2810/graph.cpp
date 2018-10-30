@@ -93,7 +93,7 @@ void graph::affichagePlusCourChemin(Node* node) {
 		Node* prev = node;
 		while (prev != NULL) {
 
-			std::cout << prev->getStationNumber() << "<-";
+			std::cout << *prev->getStationNumber() << "<-";
 			prev = prev->getPreviousNode();
 		}
 		std::cout << "poucentage: " << node->getVehicule()[0]->getPourcentage() << " temps: " << node->getVehicule()[0]->getTime() << endl;

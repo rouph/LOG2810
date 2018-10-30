@@ -10,8 +10,8 @@
 
 	{
 		stationNumber = new int(number);
-		vehicule* test = new vehicule(0, invalidDistance);
-		vehiculeStatus.push_back(test);
+		vehicule* invalidStatus = new vehicule(0, invalidDistance);
+		vehiculeStatus.push_back(invalidStatus);
 	}
 
 
@@ -49,8 +49,14 @@
 	void Node::resetNode() {
 		previousNode = NULL;
 		bIsVisited = false;
-		for (int i = 0; i < vehiculeStatus.size(); i++)
+		bisStart = false;
+		for (int i = 0; i < vehiculeStatus.size(); i++){
 			vehiculeStatus[i]->reset();
+			delete vehiculeStatus[i];
+		}
+		vehiculeStatus.clear();
+		vehicule* invalidStatus = new vehicule(0, invalidDistance);
+		vehiculeStatus.push_back(invalidStatus);
 	}
 	bool Node::isStart() {
 		return bisStart;
