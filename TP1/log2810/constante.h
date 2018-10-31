@@ -21,3 +21,12 @@ namespace pourcentage {
 		const double highRisk = 30;
 	}
 }
+
+namespace menuOption {
+	namespace {
+		const char updateMap = 'a';
+		const char shortestPath = 'b';
+		const char subGraph = 'c';
+		const char quit = 'd';
+	}
+}

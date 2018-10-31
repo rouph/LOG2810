@@ -12,7 +12,7 @@ int main()
 	int patientRisk = 0;
 	string file = "centresLocaux1.txt";
 
-	graph test;
+	graph graphe;
 
 	//INTERFACE
 	while(option!='d'){
@@ -21,18 +21,16 @@ int main()
 			<< " (c) Extract sub-graph " << endl
 			<< " (d) Quit" << endl;
 		cin >> option;
-
-		if (option == 'a' || option == 'A') {
-
+		option = tolower(option);
+		switch (option) {
+		case menuOption::updateMap:
 			std::cout << "Enter the file name of your map" << endl;
 			cin >> file;
-			graph graphe;
 			graphe.CreateGraph(file);
 			graphe.displayGraph();
 			// REINITIALISER B ET C
-		}
-
-		if (option == 'b' || option == 'B') {
+			break;
+		case menuOption::shortestPath:
 			std::cout << "Select a starting point" << endl;
 			cin >> start;
 
@@ -44,27 +42,31 @@ int main()
 				<< " 2 : medium risk " << endl
 				<< " 3 : high risk " << endl;
 			cin >> patientRisk;
-			test.getShortestPath(start, finish, patientRisk);
-			//AJOUTER FONCTION QUI CHERCHE LE PLUS COURT CHEMIN
+			graphe.getShortestPath(start, finish, patientRisk);
+			break;
+		case menuOption::subGraph:
+			/*a implementer*/
+			break;
 		}
 
-		if (option == 'c' || option == 'C') {
-			std::cout << "Select a starting point" << endl;
-			cin >> start;
 
-			std::cout << "Enter the number of the chosen vehicule" << endl
-				<< "1 : Ni-MH" << endl
-				<< "2 : Li-ion" << endl;
-			cin >> vehicule;
+		//if (option == 'c' || option == 'C') {
+		//	std::cout << "Select a starting point" << endl;
+		//	cin >> start;
 
-			std::cout << "Enter the patient's health risk " << endl
-				<< " 1 : low risk " << endl
-				<< " 2 : medium risk " << endl
-				<< " 3 : high risk " << endl;
-			cin >> patientRisk;
+		//	std::cout << "Enter the number of the chosen vehicule" << endl
+		//		<< "1 : Ni-MH" << endl
+		//		<< "2 : Li-ion" << endl;
+		//	cin >> vehicule;
 
-			//AJOUTER FONCTION QUI FAI LE SOUS GRAPHE
-		}
+		//	std::cout << "Enter the patient's health risk " << endl
+		//		<< " 1 : low risk " << endl
+		//		<< " 2 : medium risk " << endl
+		//		<< " 3 : high risk " << endl;
+		//	cin >> patientRisk;
+
+		//	//AJOUTER FONCTION QUI FAI LE SOUS GRAPHE
+		//}
 
 	}
 	return 0;
