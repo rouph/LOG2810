@@ -1,9 +1,5 @@
 #pragma once
 const int invalidDistance = 999999999;
-//	std::cout << "Enter the patient's health risk " << endl
-//		<< " 1 : low risk " << endl
-//		<< " 2 : medium risk " << endl
-//		<< " 3 : high risk " << endl;
 
 namespace healthRisk {
 	const int lowRisk = 1;

@@ -19,12 +19,12 @@ Node* arch::getNode2(){
 	return Node2;
 }
 
-bool arch::canUpdate() {
+bool arch::canUpdate(double pourcentagePerHour) {
 	vehicule * node2BestVehicule = Node2->getVehicule()[0];
 	vehicule * node1BestVehicule = Node1->getVehicule()[0];
 
 	return (node2BestVehicule->getTime() > node1BestVehicule->getTime() + archtime
-		&& (getNode1()->getVehicule()[0]->getPourcentage() - 6 * ((double)(archtime) / 60)) >= 20 ||
+		&& (getNode1()->getVehicule()[0]->getPourcentage() - percentageNeeded(pourcentagePerHour)) >= 20 ||
 
 		(node2BestVehicule->getTime() > Node1->getVehicule()[0]->getTime() + archtime || 
 		 node2BestVehicule->getTime() < Node1->getVehicule()[0]->getTime() + archtime)

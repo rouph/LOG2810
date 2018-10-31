@@ -75,7 +75,7 @@
 		}
 
 		for (unsigned int i = 0; i < archs.size(); i++) {
-			if (archs[i].canUpdate())
+			if (archs[i].canUpdate(pourcentageNeeded))
 			{
 				archs[i].updateNode2(bHasStation, pourcentageNeeded);
 			}

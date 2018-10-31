@@ -11,7 +11,7 @@ public:
 	int getTime();
 	Node* getNode1();
 	Node* getNode2();
-	bool canUpdate();
+	bool canUpdate(double pourcentagePerHour);
 	void updateNode2(bool hasStation, double pourcentagePerHour);
 	void updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
 	void rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
