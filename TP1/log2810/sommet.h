@@ -4,24 +4,23 @@
 #include <vector>
 #include "arc.h"
 #include "constante.h"
+#include "vehicule.h"
 using namespace std;
 class arch;
+class vehicule;
 class Node {
 	//Getters
 public:
 	Node(int number, bool station);
-
-	int getTotalDistance();
 	Node* getPreviousNode();
 	bool isVisited();
 	bool hasStation();
-	int getStationNumber();
+	int* getStationNumber();
 	vector<arch> getArchs();
 	bool isStart();
 	///////////////
 
 	//setters
-	void updateDistance(int distance);
 	void setPreviousNode(Node * prevNode);
 	void isVisited(bool status);
 	void hasStation(bool status);
@@ -31,13 +30,20 @@ public:
 	void resetNode();
 
 	//algo
-	void updateNode(vector<Node*>& toUpdate);
+	void updateNode(vector<Node*>& toUpdate, double pourcentageNeeded);
 
+	void addVehiculeStatusAndSort(vehicule* status);
+	vector<vehicule*> getVehicule();
+	void sortVehicule();
+	void resetVehicule();
 
+	friend ostream& operator<<(ostream& o, const Node& node);
 private:
-	int totalDistance;
+
 	bool bisStart;
-	int stationNumber;
+	int* stationNumber;
+	vector<vehicule*> vehiculeStatus;
+
 	Node * previousNode;
 	bool bHasStation;
 	bool bIsVisited;
