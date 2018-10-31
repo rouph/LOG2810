@@ -1,5 +1,5 @@
 #include"arc.h"
-
+#include<iostream>
 
 arch::arch(Node* node1, Node* node2, int itime) : Node1(node1)
 	, Node2(node2)
@@ -71,4 +71,9 @@ void arch::rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus
 double arch::percentageNeeded(double pourcentagePerHour) {
 
 	return pourcentagePerHour * ((double)(archtime) / 60);
+}
+
+ostream& operator<<(ostream& o, const arch& pArch) {
+	o << *pArch.Node2->getStationNumber() << ',' << pArch.archtime;
+	return o;
 }

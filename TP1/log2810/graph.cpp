@@ -2,7 +2,7 @@
 #include "graph.h"
 #include <string>
 #include <iostream>
-graph::graph() : fileName("centresLocaux1.txt") {}
+graph::graph() : fileName("centresLocaux.txt") {}
 
 void graph::CreateGraph() {
 	std::ifstream centreLocaux;
@@ -139,4 +139,10 @@ void graph::getShortestPath(int begining, int end, int patientType) {
 	}
 
 	affichagePlusCourChemin(Nodes[end - 1]);
+}
+
+void graph::displayGraph() {
+	for (int i = 0; i < Nodes.size(); i++) {
+		cout << *Nodes[i] << endl;
+	}
 }

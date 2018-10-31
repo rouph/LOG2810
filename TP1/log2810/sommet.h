@@ -36,6 +36,8 @@ public:
 	vector<vehicule*> getVehicule();
 	void sortVehicule();
 	void resetVehicule();
+
+	friend ostream& operator<<(ostream& o, const Node& node);
 private:
 
 	bool bisStart;

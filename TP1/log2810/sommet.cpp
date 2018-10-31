@@ -113,3 +113,16 @@
 			delete vehiculeStatus[i];
 		vehiculeStatus.clear();
 	}
+
+	ostream& operator<< (ostream& o, const Node& node) {
+		o << "(" << *node.stationNumber << ",(";
+		for (int i = 0; i < node.archs.size(); i++) {
+			o << "(" << node.archs[i] << ")";
+			if (i != node.archs.size() - 1) {
+				o << ',';
+			} 
+		}
+		
+		o << "))";
+		return o;
+	}

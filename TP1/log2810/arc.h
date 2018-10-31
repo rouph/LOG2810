@@ -15,7 +15,7 @@ public:
 	void updateNode2(bool hasStation, double pourcentagePerHour);
 	void updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
 	void rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
-
+	friend ostream& operator<<(ostream &o, const arch& pArch);
 private:
 	double percentageNeeded(double pourcentagePerHour);
 	int archtime;

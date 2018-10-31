@@ -30,7 +30,7 @@ int main()
 	//test.getShortestPath(1, 1);
 	//std::cout << endl;
 	
-
+	test.displayGraph();
 
 
 	//INTERFACE

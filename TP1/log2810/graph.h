@@ -16,6 +16,7 @@ public:
 	void setShortestPath(int begining, int end, double pourcentageNeeded);
 	void affichagePlusCourChemin(Node* node);
 	void getShortestPath(int begining, int end, int patientType);
+	void displayGraph();
 private:
 	void extractNodeInfo(string& line, int& number, bool& hasStation);
 	string fileName;
