@@ -31,18 +31,18 @@ bool arch::canUpdate() {
 		&& (node2BestVehicule->getPourcentage()) < 20 ) && Node1->getPreviousNode() != Node2;
 }
 
-void arch::updateNode2(bool hasStation) {
+void arch::updateNode2(bool hasStation, double pourcentagePerHour) {
 
 	Node2->resetVehicule();
 	Node2->setPreviousNode(Node1);
 	vector<vehicule*> vehiculeStatus = Node1->getVehicule();
 	if (!hasStation)
-		updateNode2VehiculeStatus(vehiculeStatus);
+		updateNode2VehiculeStatus(vehiculeStatus, pourcentagePerHour);
 	else
-		rechargeAndUpdateNode2VehiculeStatus(vehiculeStatus);
+		rechargeAndUpdateNode2VehiculeStatus(vehiculeStatus, pourcentagePerHour);
 }
 
-void arch::updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus) {
+void arch::updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour) {
 	for (int j = 0; j < vehiculeStatus.size(); j++) {
 		vehicule* test = new vehicule((vehiculeStatus[j]->getPourcentage() - 6 * ((double)archtime / 60)), vehiculeStatus[j]->getTime() + archtime);
 		for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
@@ -52,11 +52,11 @@ void arch::updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus) {
 	}
 }
 
-void arch::rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus) {
+void arch::rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour) {
 
 	for (int j = 0; j < vehiculeStatus.size(); j++) {
-		vehicule* notRecharged = new vehicule((vehiculeStatus[j]->getPourcentage() - 6 * ((double)(archtime) / 60)), vehiculeStatus[j]->getTime() + archtime);
-		vehicule* Recharged = (vehiculeStatus[j]->getPourcentage() >= 20) ? new vehicule((100 - 6 * ((double)(archtime) / 60)), (vehiculeStatus[j]->getTime() + archtime + 120)) : notRecharged;
+		vehicule* notRecharged = new vehicule((vehiculeStatus[j]->getPourcentage() - percentageNeeded(pourcentagePerHour)), vehiculeStatus[j]->getTime() + archtime);
+		vehicule* Recharged = (vehiculeStatus[j]->getPourcentage() >= 20) ? new vehicule((100 - percentageNeeded(pourcentagePerHour)), (vehiculeStatus[j]->getTime() + archtime + 120)) : notRecharged;
 		for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
 			int* number = vehiculeStatus[j]->getWhereCharged()[z];
 			notRecharged->addChargedStation(number);
@@ -67,4 +67,8 @@ void arch::rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus
 		if (Recharged != notRecharged)
 			Node2->addVehiculeStatusAndSort(Recharged);
 	}
+}
+double arch::percentageNeeded(double pourcentagePerHour) {
+
+	return pourcentagePerHour * ((double)(archtime) / 60);
 }

@@ -55,12 +55,8 @@ void graph::ExtractArchs(ifstream& file) {
 		Nodes[isecondStation - 1]->addArch(lol);
 	}
 }
+void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 
-
-void graph::getShortestPath(int begining, int end) {
-	//hon mtenta2akad eza begining total distance taba3o 0 aw men zid bool ano deja belchna fi hek 
-	//bi koun deja kelshi jehex bas mnekhod end wmnechteghel al affichage
-	//sinon ex=za new beginning lezem reset kelshi wnbalech an jdid
 	if(graphSet == true && !Nodes[begining - 1]->isStart())
 		for (unsigned int i = 0; i < Nodes.size(); i++)
 		{
@@ -79,14 +75,12 @@ void graph::getShortestPath(int begining, int end) {
 		//hon talama awal element mano  lelement a la posisiton end-1 we update
 		while (queue[0] != Nodes[end - 1])
 		{
-			queue[0]->updateNode(queue);
+			queue[0]->updateNode(queue, pourcentageNeeded);
 
 		}
 	}
-	//hon akide la affichage
-	affichagePlusCourChemin(Nodes[end - 1]);
-
 }
+
 void graph::affichagePlusCourChemin(Node* node) {
 
 	if (node->getVehicule()[0]->getPourcentage() >= 0) {
@@ -107,4 +101,42 @@ void graph::affichagePlusCourChemin(Node* node) {
 	else {
 		std::cout << " chemin impossbile car pourcentage finale < 20 " << endl;
 	}
+}
+
+
+void graph::getShortestPath(int begining, int end, int patientType) {
+	//NIHI
+	switch (patientType) {
+	case healthRisk::lowRisk:
+		setShortestPath(begining, end, pourcentage::NINH::lowRisk);
+		break;
+	case healthRisk::mediumRisk:
+		setShortestPath(begining, end, pourcentage::NINH::mediumRisk);
+		break;
+	case healthRisk::highRisk:
+		setShortestPath(begining, end, pourcentage::NINH::highRisk);
+		break;
+	}
+	//LIion
+	if (Nodes[end - 1]->getVehicule()[0]->getPourcentage() < 20) {
+		for (unsigned int i = 0; i < Nodes.size(); i++)
+		{
+			Nodes[i]->resetNode();
+			queue.clear();
+		}
+		switch (patientType) {
+		case healthRisk::lowRisk:
+			setShortestPath(begining, end, pourcentage::LIion::lowRisk);
+			break;
+		case healthRisk::mediumRisk:
+			setShortestPath(begining, end, pourcentage::LIion::mediumRisk);
+			break;
+		case healthRisk::highRisk:
+			setShortestPath(begining, end, pourcentage::LIion::highRisk);
+			break;
+		}
+
+	}
+
+	affichagePlusCourChemin(Nodes[end - 1]);
 }

@@ -12,10 +12,12 @@ public:
 	Node* getNode1();
 	Node* getNode2();
 	bool canUpdate();
-	void updateNode2(bool hasStation);
-	void updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus);
-	void rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus);
+	void updateNode2(bool hasStation, double pourcentagePerHour);
+	void updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
+	void rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
+
 private:
+	double percentageNeeded(double pourcentagePerHour);
 	int archtime;
 	Node* Node1;
 	Node* Node2;

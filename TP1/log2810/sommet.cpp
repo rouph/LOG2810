@@ -64,7 +64,7 @@
 	void Node::isStart(bool status) {
 		 bisStart = status;
 	}
-	void Node::updateNode(vector<Node*>& toUpdate) {
+	void Node::updateNode(vector<Node*>& toUpdate, double pourcentageNeeded) {
 
 
 		for (unsigned int i = 0; i < archs.size(); i++) {
@@ -77,7 +77,7 @@
 		for (unsigned int i = 0; i < archs.size(); i++) {
 			if (archs[i].canUpdate())
 			{
-				archs[i].updateNode2(bHasStation);
+				archs[i].updateNode2(bHasStation, pourcentageNeeded);
 			}
 		}
 

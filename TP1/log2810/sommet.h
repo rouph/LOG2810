@@ -30,7 +30,7 @@ public:
 	void resetNode();
 
 	//algo
-	void updateNode(vector<Node*>& toUpdate);
+	void updateNode(vector<Node*>& toUpdate, double pourcentageNeeded);
 
 	void addVehiculeStatusAndSort(vehicule* status);
 	vector<vehicule*> getVehicule();
