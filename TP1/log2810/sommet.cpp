@@ -50,14 +50,18 @@
 		previousNode = NULL;
 		bIsVisited = false;
 		bisStart = false;
-		for (int i = 0; i < vehiculeStatus.size(); i++){
+		clearNode();
+		vehicule* invalidStatus = new vehicule(0, invalidDistance);
+		vehiculeStatus.push_back(invalidStatus);
+	}
+	void Node::clearNode() {
+		for (int i = 0; i < vehiculeStatus.size(); i++) {
 			vehiculeStatus[i]->reset();
 			delete vehiculeStatus[i];
 		}
 		vehiculeStatus.clear();
-		vehicule* invalidStatus = new vehicule(0, invalidDistance);
-		vehiculeStatus.push_back(invalidStatus);
 	}
+
 	bool Node::isStart() {
 		return bisStart;
 	}

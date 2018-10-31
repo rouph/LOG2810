@@ -14,25 +14,6 @@ int main()
 
 	graph test;
 
-	test.CreateGraph();
-	//test.getShortestPath(1, 3);
-	//test.getShortestPath(1, 2);
-	//test.getShortestPath(3, 5);
-	//std::cout << endl;
-	//test.getShortestPath(1, 7);
-	//std::cout << endl;
-	//test.getShortestPath(3, 1);
-	//std::cout << endl;
-	//test.getShortestPath(1, 3);
-	//std::cout << endl;
-	//test.getShortestPath(7, 1);
-	//std::cout << endl;
-	//test.getShortestPath(1, 1);
-	//std::cout << endl;
-	
-	test.displayGraph();
-
-
 	//INTERFACE
 	while(option!='d'){
 		std::cout << " (a) Update map " << endl
@@ -46,7 +27,8 @@ int main()
 			std::cout << "Enter the file name of your map" << endl;
 			cin >> file;
 			graph graphe;
-			graphe.CreateGraph();
+			graphe.CreateGraph(file);
+			graphe.displayGraph();
 			// REINITIALISER B ET C
 		}
 

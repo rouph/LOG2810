@@ -36,7 +36,7 @@ public:
 	vector<vehicule*> getVehicule();
 	void sortVehicule();
 	void resetVehicule();
-
+	void clearNode();
 	friend ostream& operator<<(ostream& o, const Node& node);
 private:
 

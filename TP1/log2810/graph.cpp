@@ -2,9 +2,17 @@
 #include "graph.h"
 #include <string>
 #include <iostream>
-graph::graph() : fileName("centresLocaux.txt") {}
+graph::graph(){}
 
-void graph::CreateGraph() {
+void graph::CreateGraph(string fileName) {
+	if (graphSet) {
+		for (int i = 0; i < Nodes.size(); i++) {
+			Nodes[i]->clearNode();
+			delete Nodes[i];
+		}
+		Nodes.clear();
+		graphSet = false;
+	}
 	std::ifstream centreLocaux;
 	centreLocaux.open(fileName);
 	extractNodes(centreLocaux);
@@ -80,7 +88,6 @@ void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 		}
 	}
 }
-
 void graph::affichagePlusCourChemin(Node* node) {
 
 	if (node->getVehicule()[0]->getPourcentage() >= 0) {
@@ -102,8 +109,6 @@ void graph::affichagePlusCourChemin(Node* node) {
 		std::cout << " chemin impossbile car pourcentage finale < 20 " << endl;
 	}
 }
-
-
 void graph::getShortestPath(int begining, int end, int patientType) {
 	//NIHI
 	switch (patientType) {
@@ -140,7 +145,6 @@ void graph::getShortestPath(int begining, int end, int patientType) {
 
 	affichagePlusCourChemin(Nodes[end - 1]);
 }
-
 void graph::displayGraph() {
 	for (int i = 0; i < Nodes.size(); i++) {
 		cout << *Nodes[i] << endl;

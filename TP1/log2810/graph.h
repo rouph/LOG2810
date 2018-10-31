@@ -10,7 +10,7 @@ class graph {
 
 public:
 	graph();
-	void CreateGraph();
+	void CreateGraph(string fileName);
 	void extractNodes(ifstream& file);
 	void ExtractArchs(ifstream& file);
 	void setShortestPath(int begining, int end, double pourcentageNeeded);
@@ -19,7 +19,6 @@ public:
 	void displayGraph();
 private:
 	void extractNodeInfo(string& line, int& number, bool& hasStation);
-	string fileName;
 	bool graphSet;
 	vector<Node*> queue;
 	vector<Node*> Nodes;
