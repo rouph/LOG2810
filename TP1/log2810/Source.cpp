@@ -15,19 +15,31 @@ int main()
 	graph graphe;
 
 	//INTERFACE
-	while(option!='d'){
+	while(option!= menuOption::quit){
 		std::cout << " (a) Update map " << endl
 			<< " (b) Determine shortest safest path" << endl
 			<< " (c) Extract sub-graph " << endl
 			<< " (d) Quit" << endl;
 		cin >> option;
+		if (option != menuOption::updateMap &&
+			option != menuOption::shortestPath &&
+			option != menuOption::subGraph &&
+			option != menuOption::quit) {
+			cout << option << " is not a valid option" << endl;
+		}
 		option = tolower(option);
 		switch (option) {
 		case menuOption::updateMap:
 			std::cout << "Enter the file name of your map" << endl;
 			cin >> file;
-			graphe.CreateGraph(file);
-			graphe.displayGraph();
+			try {
+				graphe.CreateGraph(file);
+				graphe.displayGraph();
+			}
+			catch (string e) {
+				cout << e << endl;
+			}
+	
 			// REINITIALISER B ET C
 			break;
 		case menuOption::shortestPath:
@@ -42,7 +54,12 @@ int main()
 				<< " 2 : medium risk " << endl
 				<< " 3 : high risk " << endl;
 			cin >> patientRisk;
-			graphe.getShortestPath(start, finish, patientRisk);
+			try {
+				graphe.getShortestPath(start, finish, patientRisk);
+			}
+			catch (string e) {
+				cout << e << endl;
+			}
 			break;
 		case menuOption::subGraph:
 			/*a implementer*/
@@ -51,7 +68,7 @@ int main()
 
 
 		//if (option == 'c' || option == 'C') {
-		//	std::cout << "Select a starting point" << endl;
+		//	std::cout << "Select ac starting point" << endl;
 		//	cin >> start;
 
 		//	std::cout << "Enter the number of the chosen vehicule" << endl

@@ -13,8 +13,12 @@ void graph::CreateGraph(string fileName) {
 		Nodes.clear();
 		graphSet = false;
 	}
-	std::ifstream centreLocaux;
-	centreLocaux.open(fileName);
+	std::ifstream centreLocaux(fileName);
+	//centreLocaux.open(fileName);
+	if (centreLocaux.fail()) {
+		string e("invalid file name");
+		throw e;
+	}
 	extractNodes(centreLocaux);
 	ExtractArchs(centreLocaux);
 	graphSet = false;
@@ -111,6 +115,17 @@ void graph::affichagePlusCourChemin(Node* node) {
 }
 void graph::getShortestPath(int begining, int end, int patientType) {
 	//NIHI
+	string e;
+	if (begining < *(Nodes[0]->getStationNumber()) || end > Nodes.size()) {
+		e = "poisitions must be between "  + to_string(*(Nodes[0]->getStationNumber())) +" and " + to_string(Nodes.size()) ;
+	}
+	if (patientType < 1 || patientType > 3) {
+		e += '\n';
+		e += "please enter valid patient type (1,2,3)";
+	}
+	if (!e.empty()) {
+		throw e;
+	}
 	switch (patientType) {
 	case healthRisk::lowRisk:
 		setShortestPath(begining, end, pourcentage::NINH::lowRisk);
