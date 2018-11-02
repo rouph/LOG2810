@@ -60,27 +60,27 @@ int main()
 			catch (string e) {
 				cout << e << endl;
 			}
-			break;
+			break; //sousGraph
 		case menuOption::subGraph:
-			/*a implementer*/
+			std::cout << "Select ac starting point" << endl;
+			cin >> start;
+
+			std::cout << "Enter the number of the chosen vehicule" << endl
+				<< "1 : Ni-MH" << endl
+				<< "2 : Li-ion" << endl;
+			cin >> vehicule;
+
+			std::cout << "Enter the patient's health risk " << endl
+				<< " 1 : low risk " << endl
+				<< " 2 : medium risk " << endl
+				<< " 3 : high risk " << endl;
+			cin >> patientRisk;
+			graphe.sousGraph(start, 6);
 			break;
 		}
 
 
-		//if (option == 'c' || option == 'C') {
-		//	std::cout << "Select ac starting point" << endl;
-		//	cin >> start;
 
-		//	std::cout << "Enter the number of the chosen vehicule" << endl
-		//		<< "1 : Ni-MH" << endl
-		//		<< "2 : Li-ion" << endl;
-		//	cin >> vehicule;
-
-		//	std::cout << "Enter the patient's health risk " << endl
-		//		<< " 1 : low risk " << endl
-		//		<< " 2 : medium risk " << endl
-		//		<< " 3 : high risk " << endl;
-		//	cin >> patientRisk;
 
 		//	//AJOUTER FONCTION QUI FAI LE SOUS GRAPHE
 		//}

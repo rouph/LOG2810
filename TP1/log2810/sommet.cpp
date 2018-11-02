@@ -68,7 +68,7 @@
 	void Node::isStart(bool status) {
 		 bisStart = status;
 	}
-	void Node::updateNode(vector<Node*>& toUpdate, double pourcentageNeeded) {
+	void Node::updateNode(vector<Node*>& toUpdate, double pourcentageNeeded, bool canRecharge) {
 
 
 		for (unsigned int i = 0; i < archs.size(); i++) {
@@ -77,15 +77,28 @@
 				archs[i].getNode2()->isVisited(true);
 			}
 		}
-
+		
 		for (unsigned int i = 0; i < archs.size(); i++) {
 			if (archs[i].canUpdate(pourcentageNeeded))
 			{
-				archs[i].updateNode2(bHasStation, pourcentageNeeded);
+				if (canRecharge) {
+					archs[i].updateNode2(bHasStation, pourcentageNeeded);
+				}
+				else {
+					for (unsigned int i = 0; i < archs.size(); i++) {
+						if (archs[i].canUpdate(pourcentageNeeded))
+						{
+							archs[i].getNode2()->resetVehicule();
+							archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
+							vector<vehicule*> vehiculeStatus = archs[i].getNode1()->getVehicule();
+							archs[i].updateNode2VehiculeStatus(vehiculeStatus, pourcentageNeeded);
+						}
+					}
+				}			
 			}
 		}
-
-		if (toUpdate.size() > 1)
+		
+		if (toUpdate.size() >= 1)
 			toUpdate.erase(toUpdate.begin());
 
 		std::sort(toUpdate.begin(), toUpdate.end(),

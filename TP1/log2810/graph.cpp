@@ -2,6 +2,8 @@
 #include "graph.h"
 #include <string>
 #include <iostream>
+#include<functional>
+#include <array>
 graph::graph(){}
 
 void graph::CreateGraph(string fileName) {
@@ -87,7 +89,7 @@ void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 		//hon talama awal element mano  lelement a la posisiton end-1 we update
 		while (queue[0] != Nodes[end - 1])
 		{
-			queue[0]->updateNode(queue, pourcentageNeeded);
+			queue[0]->updateNode(queue, pourcentageNeeded, true);
 
 		}
 	}
@@ -164,4 +166,29 @@ void graph::displayGraph() {
 	for (int i = 0; i < Nodes.size(); i++) {
 		cout << *Nodes[i] << endl;
 	}
+}
+
+void graph::sousGraph(int begining,  double pourcentageNeeded) {
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		Nodes[i]->resetNode();
+		queue.clear();
+	}
+	Nodes[begining - 1]->isStart(true);
+	queue.push_back(Nodes[begining - 1]);
+	Nodes[begining - 1]->getVehicule()[0]->updateTime(0);
+	Nodes[begining - 1]->getVehicule()[0]->updatePourcentage(100);
+	Nodes[begining - 1]->isVisited(true);
+	//hon talama awal element mano  lelement a la posisiton end-1 we update
+	while (queue.size() > 0)
+	{
+		queue[0]->updateNode(queue, pourcentageNeeded, false);
+	}
+	vector<Node*> temp = Nodes;
+	std::sort(temp.begin(), temp.end(),
+		[](Node* a, Node* b) -> bool
+	{
+		return (a->getVehicule()[0]->getTime() > b->getVehicule()[0]->getTime()) && ((a->getVehicule()[0]->getPourcentage() >= 20));
+	});
+	affichagePlusCourChemin(temp[0]);
 }
