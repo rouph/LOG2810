@@ -14,7 +14,7 @@ public:
 	bool shortestPathConditions(double pourcentagePerHour);
 	bool subGraphConditions(double pourcentage);
 	void updateNode2(bool hasStation, double pourcentagePerHour);
-	void updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
+	void updateNode2VehiculeStatus(const vector<vehicule*>& vehiculeStatus, const double& pourcentagePerHour, const bool & canRecharge);
 	void rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour);
 	friend ostream& operator<<(ostream &o, const arch& pArch);
 private:

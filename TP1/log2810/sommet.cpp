@@ -68,7 +68,7 @@
 	void Node::isStart(bool status) {
 		 bisStart = status;
 	}
-	void Node::updateNode(vector<Node*>& toUpdate, double pourcentageNeeded, bool canRecharge) {
+	void Node::updateNode(vector<Node*>& toUpdate, double& pourcentageNeeded, bool canRecharge) {
 
 
 		for (unsigned int i = 0; i < archs.size(); i++) {
@@ -77,48 +77,61 @@
 				archs[i].getNode2()->isVisited(true);
 			}
 		}
-		
+
 		for (unsigned int i = 0; i < archs.size(); i++) {
-				if (canRecharge) {
+			if (canRecharge)
+			{
+				if (archs[i].shortestPathConditions(pourcentageNeeded))
+				{
 					archs[i].updateNode2(bHasStation, pourcentageNeeded);
 				}
-				else {
-					for (unsigned int i = 0; i < archs.size(); i++) {
-						if (archs[i].subGraphConditions(pourcentageNeeded))
-						{
-							archs[i].getNode2()->resetVehicule();
-							archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
-							vector<vehicule*> vehiculeStatus = archs[i].getNode1()->getVehicule();
-							archs[i].updateNode2VehiculeStatus(vehiculeStatus, pourcentageNeeded);
-						}
-					}
-				}			
+			}
+			else
+			{
+				if (archs[i].subGraphConditions(pourcentageNeeded))
+				{
+					archs[i].getNode2()->resetVehicule();
+					archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
+					vector<vehicule*> vehiculeStatus = archs[i].getNode1()->getVehicule();
+					archs[i].updateNode2VehiculeStatus(vehiculeStatus, pourcentageNeeded, canRecharge);
+				}
+
+			}
 		}
-	
-		
+
+
 		if (toUpdate.size() >= 1)
 			toUpdate.erase(toUpdate.begin());
 
+
 		std::sort(toUpdate.begin(), toUpdate.end(),
-			[]( Node* a,  Node* b) -> bool
+			[&](Node* a, Node* b) -> bool
 		{
-			return a->getVehicule()[0]->getTime() <  b->getVehicule()[0]->getTime()	;
+			if (canRecharge)
+				return a->getVehicule()[0]->getTime() < b->getVehicule()[0]->getTime();
+			else
+				return a->getVehicule()[0]->getTime() > b->getVehicule()[0]->getTime();
 		});
+		
 	}
 
-	void Node::addVehiculeStatusAndSort(vehicule* status) {
+	void Node::addVehiculeStatusAndSort(vehicule* status, const bool & canRecharge) {
 		vehiculeStatus.push_back(status);
-		sortVehicule();
+		sortVehicule(canRecharge);
 	}
 
 	vector<vehicule*> Node::getVehicule(){
 		return vehiculeStatus;
 	}
-	void Node::sortVehicule(){
+
+	void Node::sortVehicule(const bool & canRecharge){
 		std::sort(vehiculeStatus.begin(), vehiculeStatus.end(),
-			[](vehicule* a, vehicule* b) -> bool
+			[&](vehicule* a, vehicule* b) -> bool
 		{
-			return (a->getTime() < b->getTime()) && (a->getPourcentage() >= 20) || ((a->getTime() > b->getTime()) && (b->getPourcentage() < 20));
+			if(canRecharge)
+				return (a->getTime() < b->getTime()) && (a->getPourcentage() >= 20) || ((a->getTime() > b->getTime()) && (b->getPourcentage() < 20));
+			else
+				return (a->getTime() > b->getTime()) && (a->getPourcentage() >= 20);
 		});
 	}
 

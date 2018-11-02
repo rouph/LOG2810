@@ -7,14 +7,14 @@
 graph::graph(){}
 
 void graph::CreateGraph(string fileName) {
-	if (graphSet) {
-		for (int i = 0; i < Nodes.size(); i++) {
-			Nodes[i]->clearNode();
-			delete Nodes[i];
-		}
-		Nodes.clear();
-		graphSet = false;
+	
+	for (int i = 0; i < Nodes.size(); i++) {
+		Nodes[i]->clearNode();
+		delete Nodes[i];
 	}
+	Nodes.clear();
+	graphSet = false;
+	
 	std::ifstream centreLocaux(fileName);
 	//centreLocaux.open(fileName);
 	if (centreLocaux.fail()) {
@@ -71,12 +71,6 @@ void graph::ExtractArchs(ifstream& file) {
 }
 void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 
-	if(graphSet == true && !Nodes[begining - 1]->isStart())
-		for (unsigned int i = 0; i < Nodes.size(); i++)
-		{
-			Nodes[i]->resetNode();
-			queue.clear();
-		}
 
 	if (Nodes[begining - 1]->getVehicule()[0]->getTime() != 0) {
 		graphSet = true;
@@ -85,7 +79,7 @@ void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 		Nodes[begining - 1]->getVehicule()[0]->updateTime(0);
 		Nodes[begining - 1]->getVehicule()[0]->updatePourcentage(100);
 		Nodes[begining - 1]->isVisited(true);
-		//hon talama awal element mano  lelement a la posisiton end-1 we update
+
 		while (queue[0] != Nodes[end - 1])
 		{
 			queue[0]->updateNode(queue, pourcentageNeeded, true);
@@ -126,6 +120,11 @@ void graph::getShortestPath(int begining, int end, int patientType) {
 	}
 	if (!e.empty()) {
 		throw e;
+	}
+	for (unsigned int i = 0; i < Nodes.size(); i++)
+	{
+		Nodes[i]->resetNode();
+		queue.clear();
 	}
 	switch (patientType) {
 		Nodes[end - 1]->getVehicule()[0]->setVehiculeType("NIHI");
@@ -180,7 +179,7 @@ void graph::sousGraph(int begining,  double pourcentageNeeded) {
 	Nodes[begining - 1]->getVehicule()[0]->updateTime(0);
 	Nodes[begining - 1]->getVehicule()[0]->updatePourcentage(100);
 	Nodes[begining - 1]->isVisited(true);
-	//hon talama awal element mano  lelement a la posisiton end-1 we update
+
 	while (queue.size() > 0)
 	{
 		queue[0]->updateNode(queue, pourcentageNeeded, false);

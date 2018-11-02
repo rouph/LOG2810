@@ -30,10 +30,10 @@ public:
 	void resetNode();
 
 	//algo
-	void updateNode(vector<Node*>& toUpdate, double pourcentageNeeded, bool canRecharge);
-	void addVehiculeStatusAndSort(vehicule* status);
+	void updateNode(vector<Node*>& toUpdate, double& pourcentageNeeded, bool canRecharge);
+	void addVehiculeStatusAndSort(vehicule* status,const bool & canRecharge = true);
 	vector<vehicule*> getVehicule();
-	void sortVehicule();
+	void sortVehicule(const bool & canRecharge);
 	void resetVehicule();
 	void clearNode();
 	friend ostream& operator<<(ostream& o, const Node& node);
