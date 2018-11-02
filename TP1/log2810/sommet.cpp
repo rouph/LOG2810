@@ -104,7 +104,7 @@
 		std::sort(toUpdate.begin(), toUpdate.end(),
 			[]( Node* a,  Node* b) -> bool
 		{
-			return a->getVehicule()[0]->getTime() <  b->getVehicule()[0]->getTime()		;
+			return a->getVehicule()[0]->getTime() <  b->getVehicule()[0]->getTime()	;
 		});
 	}
 

@@ -76,7 +76,6 @@ void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 		{
 			Nodes[i]->resetNode();
 			queue.clear();
-
 		}
 
 	if (Nodes[begining - 1]->getVehicule()[0]->getTime() != 0) {
@@ -90,7 +89,6 @@ void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 		while (queue[0] != Nodes[end - 1])
 		{
 			queue[0]->updateNode(queue, pourcentageNeeded, true);
-
 		}
 	}
 }
@@ -98,6 +96,7 @@ void graph::affichagePlusCourChemin(Node* node) {
 
 	if (node->getVehicule()[0]->getPourcentage() >= 0) {
 		Node* prev = node;
+		cout << "vehicule :  " << node->getVehicule()[0]->getVehiculeType() << endl;
 		while (prev != NULL) {
 
 			std::cout << *prev->getStationNumber() << "<-";
@@ -129,6 +128,7 @@ void graph::getShortestPath(int begining, int end, int patientType) {
 		throw e;
 	}
 	switch (patientType) {
+		Nodes[end - 1]->getVehicule()[0]->setVehiculeType("NIHI");
 	case healthRisk::lowRisk:
 		setShortestPath(begining, end, pourcentage::NINH::lowRisk);
 		break;
@@ -141,6 +141,7 @@ void graph::getShortestPath(int begining, int end, int patientType) {
 	}
 	//LIion
 	if (Nodes[end - 1]->getVehicule()[0]->getPourcentage() < 20) {
+		Nodes[end - 1]->getVehicule()[0]->setVehiculeType("LIion");
 		for (unsigned int i = 0; i < Nodes.size(); i++)
 		{
 			Nodes[i]->resetNode();

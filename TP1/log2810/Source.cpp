@@ -60,7 +60,7 @@ int main()
 			catch (string e) {
 				cout << e << endl;
 			}
-			break; //sousGraph
+			break;
 		case menuOption::subGraph:
 			std::cout << "Select ac starting point" << endl;
 			cin >> start;
@@ -78,13 +78,6 @@ int main()
 			graphe.sousGraph(start, 6);
 			break;
 		}
-
-
-
-
-		//	//AJOUTER FONCTION QUI FAI LE SOUS GRAPHE
-		//}
-
 	}
 	return 0;
 }

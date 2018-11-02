@@ -32,3 +32,9 @@ void vehicule::reset() {
 }
 
 
+string vehicule::getVehiculeType(){
+	return vehiculeType;
+}
+void vehicule::setVehiculeType(string type){
+	vehiculeType = type;
+}

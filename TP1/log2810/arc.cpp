@@ -44,7 +44,7 @@ void arch::updateNode2(bool hasStation, double pourcentagePerHour) {
 
 void arch::updateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour) {
 	for (int j = 0; j < vehiculeStatus.size(); j++) {
-		vehicule* test = new vehicule((vehiculeStatus[j]->getPourcentage() - 6 * ((double)archtime / 60)), vehiculeStatus[j]->getTime() + archtime);
+		vehicule* test = new vehicule((vehiculeStatus[j]->getPourcentage() - percentageNeeded(pourcentagePerHour)), vehiculeStatus[j]->getTime() + archtime);
 		for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
 			test->addChargedStation(vehiculeStatus[j]->getWhereCharged()[z]);
 		}
