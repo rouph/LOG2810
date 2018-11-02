@@ -79,14 +79,12 @@
 		}
 		
 		for (unsigned int i = 0; i < archs.size(); i++) {
-			if (archs[i].canUpdate(pourcentageNeeded))
-			{
 				if (canRecharge) {
 					archs[i].updateNode2(bHasStation, pourcentageNeeded);
 				}
 				else {
 					for (unsigned int i = 0; i < archs.size(); i++) {
-						if (archs[i].canUpdate(pourcentageNeeded))
+						if (archs[i].subGraphConditions(pourcentageNeeded))
 						{
 							archs[i].getNode2()->resetVehicule();
 							archs[i].getNode2()->setPreviousNode(archs[i].getNode1());
@@ -95,8 +93,8 @@
 						}
 					}
 				}			
-			}
 		}
+	
 		
 		if (toUpdate.size() >= 1)
 			toUpdate.erase(toUpdate.begin());
