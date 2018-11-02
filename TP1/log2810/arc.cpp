@@ -19,16 +19,25 @@ Node* arch::getNode2(){
 	return Node2;
 }
 
-bool arch::canUpdate(double pourcentagePerHour) {
+bool arch::shortestPathConditions(double pourcentagePerHour) {
 	vehicule * node2BestVehicule = Node2->getVehicule()[0];
 	vehicule * node1BestVehicule = Node1->getVehicule()[0];
 
 	return (node2BestVehicule->getTime() > node1BestVehicule->getTime() + archtime
 		&& (getNode1()->getVehicule()[0]->getPourcentage() - percentageNeeded(pourcentagePerHour)) >= 20 ||
 
-		(node2BestVehicule->getTime() > Node1->getVehicule()[0]->getTime() + archtime || 
-		 node2BestVehicule->getTime() < Node1->getVehicule()[0]->getTime() + archtime)
-		&& (node2BestVehicule->getPourcentage()) < 20 ) && Node1->getPreviousNode() != Node2;
+	/*(node2BestVehicule->getTime() > Node1->getVehicule()[0]->getTime() + archtime || 
+		 node2BestVehicule->getTime() < Node1->getVehicule()[0]->getTime() + archtime)*/
+		 (node2BestVehicule->getPourcentage()) < 20 ) && Node1->getPreviousNode() != Node2;
+}
+
+bool arch::subGraphConditions(double pourcentage){
+	vehicule * node2BestVehicule = Node2->getVehicule()[0];
+	vehicule * node1BestVehicule = Node1->getVehicule()[0];
+
+	return (node2BestVehicule->getTime() < node1BestVehicule->getTime() + archtime
+		&& (getNode1()->getVehicule()[0]->getPourcentage() - percentageNeeded(pourcentage)) >= 20 ||
+		  (node2BestVehicule->getPourcentage()) < 20) && Node1->getPreviousNode() != Node2;
 }
 
 void arch::updateNode2(bool hasStation, double pourcentagePerHour) {

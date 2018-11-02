@@ -31,7 +31,6 @@ public:
 
 	//algo
 	void updateNode(vector<Node*>& toUpdate, double pourcentageNeeded, bool canRecharge);
-
 	void addVehiculeStatusAndSort(vehicule* status);
 	vector<vehicule*> getVehicule();
 	void sortVehicule();
