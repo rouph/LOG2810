@@ -18,8 +18,8 @@ public:
 	void affichageChemin(Node* node);
 	void getShortestPath(int beginning, int end, int patientType);
 	void displayGraph();
-	void sousGraph(int beginning, int vehiculeType, int PatientType);
-	double determinePourcentageNeeded(int vehiculeType, int PatientType);
+	void subGraph(int beginning, int vehiculeType, int PatientType);
+	double determinePercentageNeeded(int vehiculeType, int PatientType);
 
 private:
 	void extractNodeInfo(string& line, int& number, bool& hasStation);

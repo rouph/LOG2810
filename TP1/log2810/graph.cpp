@@ -7,7 +7,7 @@
 
 graph::graph(){}
 graph::~graph() {
-	for (int i = 0; i < Nodes.size(); i++) {
+	for (unsigned int i = 0; i < Nodes.size(); i++) {
 		delete Nodes[i];
 	}
 	Nodes.clear();
@@ -87,7 +87,7 @@ void graph::setShortestPath(int beginning, int end, double pourcentageNeeded) {
 
 	queue.push_back(Nodes[beginning - 1]);
 	Nodes[beginning - 1]->getVehicule()[0]->updateTime(0);
-	Nodes[beginning - 1]->getVehicule()[0]->updatePourcentage(100);
+	Nodes[beginning - 1]->getVehicule()[0]->updatePercentage(100);
 
 	while (queue[0] != Nodes[end - 1])
 	{
@@ -97,7 +97,7 @@ void graph::setShortestPath(int beginning, int end, double pourcentageNeeded) {
 
 void graph::affichageChemin(Node* node) {
 
-	if (node->getVehicule()[0]->getPourcentage() >= 0) {
+	if (node->getVehicule()[0]->getPercentage() >= 0) {
 		Node* prev = node;
 		vector<Node*> toCout;
 		while (prev != NULL) {
@@ -108,12 +108,14 @@ void graph::affichageChemin(Node* node) {
 			cout << *toCout[i]->getStationNumber() << " -> ";
 		}
 		cout << *toCout[0]->getStationNumber() << endl;
-		std::cout << "pourcentage: " << node->getVehicule()[0]->getPourcentage() << " temps: " << node->getVehicule()[0]->getTime() << endl;
+		std::cout << "pourcentage: " << node->getVehicule()[0]->getPercentage() << " temps: " << node->getVehicule()[0]->getTime() << endl;
 		std::cout << "Vehicule used: " << node->getVehiculeType() << endl;
-		if (node->getVehicule()[0]->getWhereCharged().size() > 0)
+		if (node->getVehicule()[0]->getWhereCharged().size() > 0) {
 			std::cout << "Recharged at : ";
-		for (unsigned int i = 0; i < node->getVehicule()[0]->getWhereCharged().size(); i++) {
-			std::cout << *node->getVehicule()[0]->getWhereCharged()[i] << " ";
+			for (unsigned int i = 0; i < node->getVehicule()[0]->getWhereCharged().size(); i++) {
+				std::cout << *node->getVehicule()[0]->getWhereCharged()[i] << " ";
+			}
+			std::cout << endl;
 		}
 	}
 	else {
@@ -127,10 +129,11 @@ void graph::getShortestPath(int beginning, int end, int patientType) {
 	}
 
 	string e;
-	if (beginning < *(Nodes[0]->getStationNumber()) || end > Nodes.size() || !isdigit(beginning) || !isdigit(end)) {
+	int maxLength = Nodes.size();
+	if (beginning < *(Nodes[0]->getStationNumber()) || end > maxLength) {
 		e = "poisitions must be between "  + to_string(*(Nodes[0]->getStationNumber())) +" and " + to_string(Nodes.size()) ;
 	}
-	if (patientType < 1 || patientType > 3 || !isdigit(patientType)) {
+	if (patientType < 1 || patientType > 3 ) {
 		e += '\n';
 		e += "please enter valid patient type (1,2,3)";
 	}
@@ -157,7 +160,7 @@ void graph::getShortestPath(int beginning, int end, int patientType) {
 	}
 	//LIion
 
-	if (Nodes[end - 1]->getVehicule()[0]->getPourcentage() < 20) {
+	if (Nodes[end - 1]->getVehicule()[0]->getPercentage() < 20) {
 		Nodes[end - 1]->setVehiculeType("LIion");
 		for (unsigned int i = 0; i < Nodes.size(); i++)
 		{
@@ -188,16 +191,21 @@ void graph::displayGraph() {
 	cout << endl;
 }
 
-void graph::sousGraph(int beginning,int vehiculeType, int PatientType) {
+void graph::subGraph(int beginning,int vehiculeType, int PatientType) {
+	if (!graphSet) {
+		string error("Please enter a fileName (option 1)");
+		throw error;
+	}
+
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		Nodes[i]->resetNode();
 		queue.clear();
 	}
-	double pourcentageNeeded = determinePourcentageNeeded(vehiculeType, PatientType);
+	double pourcentageNeeded = determinePercentageNeeded(vehiculeType, PatientType);
 	queue.push_back(Nodes[beginning - 1]);
 	Nodes[beginning - 1]->getVehicule()[0]->updateTime(0);
-	Nodes[beginning - 1]->getVehicule()[0]->updatePourcentage(100);
+	Nodes[beginning - 1]->getVehicule()[0]->updatePercentage(100);
 	Nodes[beginning - 1]->isInQueue(true);
 
 	while (queue.size() > 0)
@@ -209,13 +217,17 @@ void graph::sousGraph(int beginning,int vehiculeType, int PatientType) {
 	std::sort(temp.begin(), temp.end(),
 		[](Node* a, Node* b) -> bool
 	{
-		return (a->getVehicule()[0]->getTime() > b->getVehicule()[0]->getTime()) && ((a->getVehicule()[0]->getPourcentage() >= 20));
+		return (a->getVehicule()[0]->getTime() > b->getVehicule()[0]->getTime()) && ((a->getVehicule()[0]->getPercentage() >= 20)) ||
+				(a->getVehicule()[0]->getTime() < b->getVehicule()[0]->getTime()) && ((b->getVehicule()[0]->getPercentage() < 20));
 	});
-
+	if (vehiculeType == 2)
+		temp[0]->setVehiculeType("LIion");
+	else
+		temp[0]->setVehiculeType("NI-MH");
 	affichageChemin(temp[0]);
 }
 
-double graph::determinePourcentageNeeded(int vehiculeType, int PatientType)
+double graph::determinePercentageNeeded(int vehiculeType, int PatientType)
 {
 	string e;
 	if (vehiculeType < 1 || vehiculeType > 2) {
@@ -228,7 +240,6 @@ double graph::determinePourcentageNeeded(int vehiculeType, int PatientType)
 	if (!e.empty()) {
 		throw e;
 	}
-
 	switch (PatientType) {
 	case healthRisk::lowRisk:
 		return  vehiculeType == 1 ? pourcentage::NIMH::lowRisk : pourcentage::LIion::lowRisk;
@@ -236,5 +247,7 @@ double graph::determinePourcentageNeeded(int vehiculeType, int PatientType)
 		return  vehiculeType == 1 ? pourcentage::NIMH::mediumRisk : pourcentage::LIion::mediumRisk;
 	case healthRisk::highRisk:
 		return  vehiculeType == 1 ? pourcentage::NIMH::highRisk : pourcentage::LIion::highRisk;
+	default:
+		return pourcentage::NIMH::lowRisk; //it can't rreach that point but we're avoiding a warning
 	}
 }	

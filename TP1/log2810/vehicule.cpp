@@ -5,14 +5,9 @@ vehicule::vehicule(double pourc, int temps): pourcentage(pourc), time(temps) {
 
 }
 vehicule::~vehicule() {
-	for (int i = 0; i < whereCharged.size(); i++) {
-
-		delete whereCharged[i];
-	}
-	whereCharged.clear();
 }
 
-double vehicule::getPourcentage() {
+double vehicule::getPercentage() {
 	return pourcentage;
 }
 int vehicule::getTime() {
@@ -28,7 +23,7 @@ void vehicule::addChargedStation(int* station) {
 	whereCharged.push_back(station);
 }
 
-void vehicule::updatePourcentage(double status) {
+void vehicule::updatePercentage(double status) {
 	pourcentage = status;
 }
 

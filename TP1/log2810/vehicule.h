@@ -8,10 +8,10 @@ class vehicule {
 public:
 	vehicule(double pourc = 100, int temps = 0);
 	~vehicule();
-	double getPourcentage();
+	double getPercentage();
 	int getTime();
 	void updateTime(int status);
-	void updatePourcentage(double status);
+	void updatePercentage(double status);
 	std::vector<int*> getWhereCharged();
 	void addChargedStation(int* station);
 	void reset();

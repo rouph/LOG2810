@@ -14,7 +14,7 @@ Node::Node(int number, bool station):
 
 Node::~Node() {
 	
-	for (int i = 0; i < vehiculeStatus.size(); i++) {
+	for (unsigned int i = 0; i < vehiculeStatus.size(); i++) {
 		delete vehiculeStatus[i];
 	}
 	vehiculeStatus.clear();
@@ -66,7 +66,7 @@ void Node::resetNode() {
 	vehiculeStatus.push_back(invalidStatus);
 }
 void Node::clearNode() {
-	for (int i = 0; i < vehiculeStatus.size(); i++) {
+	for (unsigned int i = 0; i < vehiculeStatus.size(); i++) {
 		vehiculeStatus[i]->reset();
 		delete vehiculeStatus[i];
 	}
@@ -81,9 +81,11 @@ void Node::updateNode(vector<Node*>& toUpdate, double& pourcentageNeeded, bool c
 		}
 	}
 	for (unsigned int i = 0; i < archs.size(); i++) {
-		if (canRecharge && archs[i].shortestPathConditions(pourcentageNeeded))
-		{
-			archs[i].updateNode2(bHasStation, pourcentageNeeded);
+		if (canRecharge) {
+			if (archs[i].shortestPathConditions(pourcentageNeeded))
+			{
+				archs[i].updateNode2(bHasStation, pourcentageNeeded);
+			}
 		}
 		else if (archs[i].subGraphConditions(pourcentageNeeded))
 		{
@@ -122,22 +124,22 @@ void Node::sortVehicule(const bool & canRecharge){
 		[&](vehicule* a, vehicule* b) -> bool
 	{
 		if(canRecharge)
-			return (a->getTime() < b->getTime()) && (a->getPourcentage() >= 20) || ((a->getTime() > b->getTime()) && (b->getPourcentage() < 20));
+			return (a->getTime() < b->getTime()) && (a->getPercentage() >= 20) || ((a->getTime() > b->getTime()) && (b->getPercentage() < 20));
 		else
-			return (a->getTime() > b->getTime()) && (a->getPourcentage() >= 20);
+			return (a->getTime() > b->getTime()) && (a->getPercentage() >= 20);
 	});
 }
 
 
 void Node::resetVehicule() {
-	for (int i = 0; i < vehiculeStatus.size(); i++)
+	for (unsigned int i = 0; i < vehiculeStatus.size(); i++)
 		delete vehiculeStatus[i];
 	vehiculeStatus.clear();
 }
 
 ostream& operator<< (ostream& o, const Node& node) {
 	o << "(" << *node.stationNumber << ",(";
-	for (int i = 0; i < node.archs.size(); i++) {
+	for (unsigned int i = 0; i < node.archs.size(); i++) {
 		o << "(" << node.archs[i] << ")";
 		if (i != node.archs.size() - 1) {
 			o << ',';

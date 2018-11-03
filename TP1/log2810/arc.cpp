@@ -24,8 +24,8 @@ bool arch::shortestPathConditions(double pourcentagePerHour) {
 	vehicule * node1BestVehicule = Node1->getVehicule()[0];
 
 	return (node2BestVehicule->getTime() > node1BestVehicule->getTime() + archtime
-			&& (getNode1()->getVehicule()[0]->getPourcentage() - percentageNeeded(pourcentagePerHour)) >= 20 
-			|| (node2BestVehicule->getPourcentage()) < 20 ) 
+			&& (getNode1()->getVehicule()[0]->getPercentage() - percentageNeeded(pourcentagePerHour)) >= 20 
+			|| (node2BestVehicule->getPercentage()) < 20 ) 
 		&& Node1->getPreviousNode() != Node2;
 }
 
@@ -44,8 +44,8 @@ bool arch::subGraphConditions(double pourcentage){
 			prev = prev->getPreviousNode();
 	}
 	return (node2BestVehicule->getTime() < node1BestVehicule->getTime() + archtime
-		&& (getNode1()->getVehicule()[0]->getPourcentage() - percentageNeeded(pourcentage)) >= 20 ||
-		  (node2BestVehicule->getPourcentage()) < 20) && test;
+		&& (getNode1()->getVehicule()[0]->getPercentage() - percentageNeeded(pourcentage)) >= 20 ||
+		  (node2BestVehicule->getPercentage()) < 20) && test;
 }
 
 void arch::updateNode2(bool hasStation, double pourcentagePerHour) {
@@ -61,9 +61,9 @@ void arch::updateNode2(bool hasStation, double pourcentagePerHour) {
 }
 
 void arch::updateNode2VehiculeStatus(const vector<vehicule*>& vehiculeStatus,const double& pourcentagePerHour,const bool & canRecharge) {
-	for (int j = 0; j < vehiculeStatus.size(); j++) {
-		vehicule* test = new vehicule((vehiculeStatus[j]->getPourcentage() - percentageNeeded(pourcentagePerHour)), vehiculeStatus[j]->getTime() + archtime);
-		for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
+	for (unsigned int j = 0; j < vehiculeStatus.size(); j++) {
+		vehicule* test = new vehicule((vehiculeStatus[j]->getPercentage() - percentageNeeded(pourcentagePerHour)), vehiculeStatus[j]->getTime() + archtime);
+		for (unsigned int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
 			test->addChargedStation(vehiculeStatus[j]->getWhereCharged()[z]);
 		}
 		Node2->addVehiculeStatusAndSort(test, canRecharge);
@@ -72,13 +72,13 @@ void arch::updateNode2VehiculeStatus(const vector<vehicule*>& vehiculeStatus,con
 
 void arch::rechargeAndUpdateNode2VehiculeStatus(vector<vehicule*> vehiculeStatus, double pourcentagePerHour) {
 
-	for (int j = 0; j < vehiculeStatus.size(); j++) {
+	for (unsigned int j = 0; j < vehiculeStatus.size(); j++) {
 
-		vehicule* notRecharged = new vehicule((vehiculeStatus[j]->getPourcentage() - percentageNeeded(pourcentagePerHour)), vehiculeStatus[j]->getTime() + archtime);
+		vehicule* notRecharged = new vehicule((vehiculeStatus[j]->getPercentage() - percentageNeeded(pourcentagePerHour)), vehiculeStatus[j]->getTime() + archtime);
 
-		vehicule* Recharged = (vehiculeStatus[j]->getPourcentage() >= 20) ? new vehicule(((double)100 - percentageNeeded(pourcentagePerHour)), (vehiculeStatus[j]->getTime() + archtime + 120)) : notRecharged;
+		vehicule* Recharged = (vehiculeStatus[j]->getPercentage() >= 20) ? new vehicule(((double)100 - percentageNeeded(pourcentagePerHour)), (vehiculeStatus[j]->getTime() + archtime + 120)) : notRecharged;
 
-		for (int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
+		for (unsigned int z = 0; z < vehiculeStatus[j]->getWhereCharged().size(); z++) {
 			int* number = vehiculeStatus[j]->getWhereCharged()[z];
 			notRecharged->addChargedStation(number);
 			Recharged->addChargedStation(number);

@@ -74,8 +74,6 @@ void Program::shortest() {
 	ourGraph.getShortestPath(start, finish, patientRisk);
 	}
 	catch (string e) {
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		cin.clear();
 		cout << e << endl;
 	}
 
@@ -83,7 +81,7 @@ void Program::shortest() {
 void Program::subGraph() {
 	int start, vehiculeType, patientRisk;
 	try {
-		std::cout << "Select ac starting point" << endl;
+		std::cout << "Select a starting point" << endl;
 		cin >> start;
 		if (cin.fail()) {
 			string error("Enter a numeric value");
@@ -114,7 +112,7 @@ void Program::subGraph() {
 		return;
 	}
 	try {
-		ourGraph.sousGraph(start, vehiculeType, patientRisk);
+		ourGraph.subGraph(start, vehiculeType, patientRisk);
 	}
 	catch (string e) {
 		cout << e << endl;
