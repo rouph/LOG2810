@@ -8,7 +8,7 @@ namespace healthRisk {
 }
 
 namespace pourcentage {
-	namespace NINH {
+	namespace NIMH {
 		const double lowRisk = 6;
 		const double mediumRisk = 12;
 		const double highRisk = 48;

@@ -4,6 +4,7 @@
 #include <iostream>
 #include<functional>
 #include <array>
+
 graph::graph(){}
 
 void graph::CreateGraph(string fileName) {
@@ -71,7 +72,7 @@ void graph::ExtractArchs(ifstream& file) {
 		Nodes[isecondStation - 1]->addArch(iArch);
 	}
 }
-void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
+void graph::setShortestPath(int beginning, int end, double pourcentageNeeded) {
 
 	if (!graphSet) 
 	{
@@ -79,9 +80,9 @@ void graph::setShortestPath(int begining, int end, double pourcentageNeeded) {
 		throw error;
 	}
 
-	queue.push_back(Nodes[begining - 1]);
-	Nodes[begining - 1]->getVehicule()[0]->updateTime(0);
-	Nodes[begining - 1]->getVehicule()[0]->updatePourcentage(100);
+	queue.push_back(Nodes[beginning - 1]);
+	Nodes[beginning - 1]->getVehicule()[0]->updateTime(0);
+	Nodes[beginning - 1]->getVehicule()[0]->updatePourcentage(100);
 
 	while (queue[0] != Nodes[end - 1])
 	{
@@ -114,10 +115,14 @@ void graph::affichageChemin(Node* node) {
 		std::cout << " No possible Path, final pourcentage < 20 " << endl;
 	}
 }
-void graph::getShortestPath(int begining, int end, int patientType) {
-	//NIHI
+void graph::getShortestPath(int beginning, int end, int patientType) {
+	if (!graphSet) {
+		string error("Please enter a fileName (option 1)");
+		throw error;
+	}
+
 	string e;
-	if (begining < *(Nodes[0]->getStationNumber()) || end > (int)Nodes.size()) {
+	if (beginning < *(Nodes[0]->getStationNumber()) || end > Nodes.size()) {
 		e = "poisitions must be between "  + to_string(*(Nodes[0]->getStationNumber())) +" and " + to_string(Nodes.size()) ;
 	}
 	if (patientType < 1 || patientType > 3) {
@@ -136,13 +141,13 @@ void graph::getShortestPath(int begining, int end, int patientType) {
 	Nodes[end - 1]->setVehiculeType("NIHI");
 	switch (patientType) {
 	case healthRisk::lowRisk:
-		setShortestPath(begining, end, pourcentage::NINH::lowRisk);
+		setShortestPath(beginning, end, pourcentage::NIMH::lowRisk);
 		break;
 	case healthRisk::mediumRisk:
-		setShortestPath(begining, end, pourcentage::NINH::mediumRisk);
+		setShortestPath(beginning, end, pourcentage::NIMH::mediumRisk);
 		break;
 	case healthRisk::highRisk:
-		setShortestPath(begining, end, pourcentage::NINH::highRisk);
+		setShortestPath(beginning, end, pourcentage::NIMH::highRisk);
 		break;
 	}
 	//LIion
@@ -157,13 +162,13 @@ void graph::getShortestPath(int begining, int end, int patientType) {
 
 		switch (patientType) {
 		case healthRisk::lowRisk:
-			setShortestPath(begining, end, pourcentage::LIion::lowRisk);
+			setShortestPath(beginning, end, pourcentage::LIion::lowRisk);
 			break;
 		case healthRisk::mediumRisk:
-			setShortestPath(begining, end, pourcentage::LIion::mediumRisk);
+			setShortestPath(beginning, end, pourcentage::LIion::mediumRisk);
 			break;
 		case healthRisk::highRisk:
-			setShortestPath(begining, end, pourcentage::LIion::highRisk);
+			setShortestPath(beginning, end, pourcentage::LIion::highRisk);
 			break;
 		}
 
@@ -178,17 +183,17 @@ void graph::displayGraph() {
 	cout << endl;
 }
 
-void graph::sousGraph(int begining,int vehiculeType, int PatientType) {
+void graph::sousGraph(int beginning,int vehiculeType, int PatientType) {
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		Nodes[i]->resetNode();
 		queue.clear();
 	}
-	double pourcentage = NeededdeterminePourcentageNeeded(vehiculeType, PatientType);
-	queue.push_back(Nodes[begining - 1]);
-	Nodes[begining - 1]->getVehicule()[0]->updateTime(0);
-	Nodes[begining - 1]->getVehicule()[0]->updatePourcentage(100);
-	Nodes[begining - 1]->isInQueue(true);
+	double pourcentageNeeded = determinePourcentageNeeded(vehiculeType, PatientType);
+	queue.push_back(Nodes[beginning - 1]);
+	Nodes[beginning - 1]->getVehicule()[0]->updateTime(0);
+	Nodes[beginning - 1]->getVehicule()[0]->updatePourcentage(100);
+	Nodes[beginning - 1]->isInQueue(true);
 
 	while (queue.size() > 0)
 	{
@@ -207,12 +212,24 @@ void graph::sousGraph(int begining,int vehiculeType, int PatientType) {
 
 double graph::determinePourcentageNeeded(int vehiculeType, int PatientType)
 {
+	string e;
+	if (vehiculeType < 1 || vehiculeType > 2) {
+		e = "Please chose a valid vehicule type (1, 2)";
+	}
+	if (PatientType < 1 || PatientType > 3) {
+		e += '\n';
+		e += "please enter valid patient type (1, 2, 3)";
+	}
+	if (!e.empty()) {
+		throw e;
+	}
+
 	switch (PatientType) {
 	case healthRisk::lowRisk:
-		return  vehiculeType == 1 ? pourcentage::NIHI::lowRisk : pourcentage::LIion::lowRisk;
+		return  vehiculeType == 1 ? pourcentage::NIMH::lowRisk : pourcentage::LIion::lowRisk;
 	case healthRisk::mediumRisk:
-		return  vehiculeType == 1 ? pourcentage::NIHI::mediumRisk : pourcentage::LIion::mediumRisk;
+		return  vehiculeType == 1 ? pourcentage::NIMH::mediumRisk : pourcentage::LIion::mediumRisk;
 	case healthRisk::highRisk:
-		return  vehiculeType == 1 ? pourcentage::NIHI::highRisk : pourcentage::LIion::highRisk;
+		return  vehiculeType == 1 ? pourcentage::NIMH::highRisk : pourcentage::LIion::highRisk;
 	}
 }	

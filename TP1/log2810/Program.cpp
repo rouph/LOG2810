@@ -11,13 +11,13 @@ void Program::StartProgram() {
 			<< " (c) Extract sub-graph " << endl
 			<< " (d) Quit" << endl;
 		cin >> option;
+		option = tolower(option);
 		if (option != menuOption::updateMap &&
 			option != menuOption::shortestPath &&
 			option != menuOption::subGraph &&
 			option != menuOption::quit) {
 			cout << option << " is not a valid option" << endl;
 		}
-		option = tolower(option);
 		switch (option) {
 		case menuOption::updateMap:
 			updateMap();
@@ -78,5 +78,10 @@ void Program::subGraph() {
 		<< " 2 : medium risk " << endl
 		<< " 3 : high risk " << endl;
 	cin >> patientRisk;
-	ourGraph.sousGraph(start, 6);
+	try {
+		ourGraph.sousGraph(start, vehiculeType, patientRisk);
+	}
+	catch (string e) {
+		cout << e << endl;
+	}
 }

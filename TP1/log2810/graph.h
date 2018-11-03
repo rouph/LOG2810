@@ -13,11 +13,11 @@ public:
 	void CreateGraph(string fileName);
 	void extractNodes(ifstream& file);
 	void ExtractArchs(ifstream& file);
-	void setShortestPath(int begining, int end, double pourcentageNeeded);
+	void setShortestPath(int beginning, int end, double pourcentageNeeded);
 	void affichageChemin(Node* node);
-	void getShortestPath(int begining, int end, int patientType);
+	void getShortestPath(int beginning, int end, int patientType);
 	void displayGraph();
-	void sousGraph(int beginning, int end, double pourcentageNeeded);
+	void sousGraph(int beginning, int vehiculeType, int PatientType);
 	double determinePourcentageNeeded(int vehiculeType, int PatientType);
 
 private:

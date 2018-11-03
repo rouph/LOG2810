@@ -6,6 +6,7 @@ class Program {
 public:
 	Program();
 	void StartProgram();
+private:
 	void updateMap();
 	void shortest();
 	void subGraph();
