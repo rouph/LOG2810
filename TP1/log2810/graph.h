@@ -10,6 +10,7 @@ class graph {
 
 public:
 	graph();
+	~graph();
 	void CreateGraph(string fileName);
 	void extractNodes(ifstream& file);
 	void ExtractArchs(ifstream& file);

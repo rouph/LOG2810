@@ -4,6 +4,13 @@
 vehicule::vehicule(double pourc, int temps): pourcentage(pourc), time(temps) {
 
 }
+vehicule::~vehicule() {
+	for (int i = 0; i < whereCharged.size(); i++) {
+
+		delete whereCharged[i];
+	}
+	whereCharged.clear();
+}
 
 double vehicule::getPourcentage() {
 	return pourcentage;

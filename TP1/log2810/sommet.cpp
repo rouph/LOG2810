@@ -12,6 +12,14 @@ Node::Node(int number, bool station):
 	vehiculeStatus.push_back(invalidStatus);
 }
 
+Node::~Node() {
+	
+	for (int i = 0; i < vehiculeStatus.size(); i++) {
+		delete vehiculeStatus[i];
+	}
+	vehiculeStatus.clear();
+	delete stationNumber;
+}
 
 Node* Node::getPreviousNode(){
 	return previousNode;

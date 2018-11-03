@@ -6,7 +6,12 @@
 #include <array>
 
 graph::graph(){}
-
+graph::~graph() {
+	for (int i = 0; i < Nodes.size(); i++) {
+		delete Nodes[i];
+	}
+	Nodes.clear();
+}
 void graph::CreateGraph(string fileName) {
 	
 	for (unsigned int i = 0; i < Nodes.size(); i++) {
@@ -122,10 +127,10 @@ void graph::getShortestPath(int beginning, int end, int patientType) {
 	}
 
 	string e;
-	if (beginning < *(Nodes[0]->getStationNumber()) || end > Nodes.size()) {
+	if (beginning < *(Nodes[0]->getStationNumber()) || end > Nodes.size() || !isdigit(beginning) || !isdigit(end)) {
 		e = "poisitions must be between "  + to_string(*(Nodes[0]->getStationNumber())) +" and " + to_string(Nodes.size()) ;
 	}
-	if (patientType < 1 || patientType > 3) {
+	if (patientType < 1 || patientType > 3 || !isdigit(patientType)) {
 		e += '\n';
 		e += "please enter valid patient type (1,2,3)";
 	}

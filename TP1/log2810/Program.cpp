@@ -44,6 +44,7 @@ void Program::updateMap() {
 	}
 }
 void Program::shortest() {
+	try {
 	int start, finish, patientRisk;
 	std::cout << "Select a starting point" << endl;
 	cin >> start;
@@ -56,12 +57,16 @@ void Program::shortest() {
 		<< " 2 : medium risk " << endl
 		<< " 3 : high risk " << endl;
 	cin >> patientRisk;
-	try {
-		ourGraph.getShortestPath(start, finish, patientRisk);
+	
+	ourGraph.getShortestPath(start, finish, patientRisk);
 	}
 	catch (string e) {
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin.clear();
+		if(cin.fail()) cout << "Enter Numeric Value";
 		cout << e << endl;
 	}
+
 }
 void Program::subGraph() {
 	int start, vehiculeType, patientRisk;

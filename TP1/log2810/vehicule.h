@@ -7,6 +7,7 @@ using namespace std;
 class vehicule {
 public:
 	vehicule(double pourc = 100, int temps = 0);
+	~vehicule();
 	double getPourcentage();
 	int getTime();
 	void updateTime(int status);

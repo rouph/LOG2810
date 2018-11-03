@@ -13,6 +13,7 @@ class Node {
 
 public:
 	Node(int number, bool station);
+	~Node();
 	Node* getPreviousNode();
 	bool isInQueue();
 	bool hasStation();
