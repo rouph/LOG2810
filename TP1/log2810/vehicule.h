@@ -13,8 +13,6 @@ public:
 	void updatePourcentage(double status);
 	std::vector<int*> getWhereCharged();
 	void addChargedStation(int* station);
-	string getVehiculeType();
-	void setVehiculeType(string type);
 	void reset();
 private:
 	double pourcentage;

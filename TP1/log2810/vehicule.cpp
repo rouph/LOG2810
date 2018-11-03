@@ -30,11 +30,3 @@ void vehicule::reset() {
 	time = invalidDistance;
 	whereCharged.clear();
 }
-
-
-string vehicule::getVehiculeType(){
-	return vehiculeType;
-}
-void vehicule::setVehiculeType(string type){
-	vehiculeType = type;
-}

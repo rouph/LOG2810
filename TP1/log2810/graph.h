@@ -14,10 +14,12 @@ public:
 	void extractNodes(ifstream& file);
 	void ExtractArchs(ifstream& file);
 	void setShortestPath(int begining, int end, double pourcentageNeeded);
-	void affichagePlusCourChemin(Node* node);
+	void affichageChemin(Node* node);
 	void getShortestPath(int begining, int end, int patientType);
 	void displayGraph();
-	void sousGraph(int beginning,  double pourcentageNeeded);
+	void sousGraph(int beginning, int end, double pourcentageNeeded);
+	double determinePourcentageNeeded(int vehiculeType, int PatientType);
+
 private:
 	void extractNodeInfo(string& line, int& number, bool& hasStation);
 	bool graphSet;

@@ -8,7 +8,7 @@ int main()
 	char option = 'e';
 	int start = 0;
 	int finish = 0;
-	string vehicule = "Ni-MH";
+	int vehicule = 0;
 	int patientRisk = 0;
 	string file = "centresLocaux1.txt";
 
@@ -75,7 +75,7 @@ int main()
 				<< " 2 : medium risk " << endl
 				<< " 3 : high risk " << endl;
 			cin >> patientRisk;
-			graphe.sousGraph(start, 6);
+			graphe.sousGraph(start, vehicule, patientRisk);
 			break;
 		}
 	}

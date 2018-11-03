@@ -5,27 +5,28 @@
 #include "arc.h"
 #include "constante.h"
 #include "vehicule.h"
+#include <string>
 using namespace std;
 class arch;
 class vehicule;
 class Node {
-	//Getters
+
 public:
 	Node(int number, bool station);
 	Node* getPreviousNode();
-	bool isVisited();
+	bool isInQueue();
 	bool hasStation();
 	int* getStationNumber();
 	vector<arch> getArchs();
-	bool isStart();
-	///////////////
+
 
 	//setters
 	void setPreviousNode(Node * prevNode);
-	void isVisited(bool status);
+	void isInQueue(bool status);
 	void hasStation(bool status);
 	void addArch(arch element);
-	void isStart(bool status);
+	string getVehiculeType();
+	void setVehiculeType(string type);
 	//reset
 	void resetNode();
 
@@ -39,13 +40,13 @@ public:
 	friend ostream& operator<<(ostream& o, const Node& node);
 private:
 
-	bool bisStart;
 	int* stationNumber;
 	vector<vehicule*> vehiculeStatus;
 
 	Node * previousNode;
 	bool bHasStation;
-	bool bIsVisited;
+	bool bIsInQueue;
+	string vehiculeType;
 	vector<arch> archs;
 };
 
