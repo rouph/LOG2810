@@ -44,45 +44,75 @@ void Program::updateMap() {
 	}
 }
 void Program::shortest() {
-	try {
 	int start, finish, patientRisk;
-	std::cout << "Select a starting point" << endl;
-	cin >> start;
-
-	std::cout << "Select a destination " << endl;
-	cin >> finish;
-
+	try {
+		std::cout << "Select a starting point" << endl;
+		cin >> start;
+		if (cin.fail()) {
+			string error("Enter a numeric value");
+			throw error;
+		}
+		std::cout << "Select a destination " << endl;
+		cin >> finish;
+		if (cin.fail()) {
+			string error("Enter a numeric value");
+			throw error;
+		}
+	}
+	catch (string e) {
+		cin.clear();
+		cin.ignore();
+		cout << e << endl;
+		return;
+	}
 	std::cout << "Enter the patient's health risk " << endl
 		<< " 1 : low risk " << endl
 		<< " 2 : medium risk " << endl
 		<< " 3 : high risk " << endl;
 	cin >> patientRisk;
-	
+	try{
 	ourGraph.getShortestPath(start, finish, patientRisk);
 	}
 	catch (string e) {
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		cin.clear();
-		if(cin.fail()) cout << "Enter Numeric Value";
 		cout << e << endl;
 	}
 
 }
 void Program::subGraph() {
 	int start, vehiculeType, patientRisk;
-	std::cout << "Select ac starting point" << endl;
-	cin >> start;
-
-	std::cout << "Enter the number of the chosen vehicule" << endl
-		<< "1 : Ni-MH" << endl
-		<< "2 : Li-ion" << endl;
-	cin >> vehiculeType;
-
-	std::cout << "Enter the patient's health risk " << endl
-		<< " 1 : low risk " << endl
-		<< " 2 : medium risk " << endl
-		<< " 3 : high risk " << endl;
-	cin >> patientRisk;
+	try {
+		std::cout << "Select ac starting point" << endl;
+		cin >> start;
+		if (cin.fail()) {
+			string error("Enter a numeric value");
+			throw error;
+		}
+		std::cout << "Enter the number of the chosen vehicule" << endl
+			<< "1 : Ni-MH" << endl
+			<< "2 : Li-ion" << endl;
+		cin >> vehiculeType;
+		if (cin.fail()) {
+			string error("Enter a numeric value");
+			throw error;
+		}
+		std::cout << "Enter the patient's health risk " << endl
+			<< " 1 : low risk " << endl
+			<< " 2 : medium risk " << endl
+			<< " 3 : high risk " << endl;
+		cin >> patientRisk;
+		if (cin.fail()) {
+			string error("Enter a numeric value");
+			throw error;
+		}
+	}
+	catch (string e) {
+		cin.clear();
+		cin.ignore();
+		cout << e << endl;
+		return;
+	}
 	try {
 		ourGraph.sousGraph(start, vehiculeType, patientRisk);
 	}
